@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexaMind AI — Revolutionize Your Workflow</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF5722; --orange-light: #FF7043; --orange-deep: #E64A19;
+    --dark: #0A0A0A; --dark2: #111111; --dark3: #1A1A1A; --dark4: #222222;
+    --text-muted: rgba(255,255,255,0.5); --text-dim: rgba(255,255,255,0.7);
+    --border: rgba(255,255,255,0.08);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--dark); color: #fff; cursor: none; overflow-x: hidden; }
+
+  /* CURSOR */
+  .cursor { width:12px; height:12px; background:var(--orange); border-radius:50%; position:fixed; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width 0.3s,height 0.3s; }
+  .cursor-trail { width:36px; height:36px; border:1.5px solid var(--orange); border-radius:50%; position:fixed; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:left 0.12s ease,top 0.12s ease; opacity:0.5; }
+  body:has(a:hover) .cursor, body:has(button:hover) .cursor { width:20px; height:20px; }
+
+  /* NOISE */
+  body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events:none; z-index:0; opacity:0.4; }
+
+  /* NAV */
+  nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:20px 60px; background:rgba(10,10,10,0.9); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); transition:padding 0.3s; }
+  nav.scrolled { padding:14px 60px; }
+  .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:22px; color:#fff; text-decoration:none; display:flex; align-items:center; gap:8px; cursor:none; }
+  .logo-dot { width:10px; height:10px; background:var(--orange); border-radius:50%; display:inline-block; }
+  .nav-links { display:flex; gap:32px; list-style:none; }
+  .nav-links a { color:var(--text-dim); text-decoration:none; font-size:14px; font-weight:500; transition:color 0.2s; cursor:none; }
+  .nav-links a:hover { color:#fff; }
+  .nav-links a.active { color:var(--orange); }
+  .nav-cta { background:var(--orange); color:#fff; border:none; padding:10px 24px; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; cursor:none; transition:background 0.2s,transform 0.2s; }
+  .nav-cta:hover { background:var(--orange-light); transform:translateY(-1px); }
+
+  /* PAGES */
+  .page { display:none; min-height:100vh; padding-top:80px; }
+  .page.active { display:block; }
+
+  /* KEYFRAMES */
+  @keyframes fadeInDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes orbFloat { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-30px) scale(1.05)} }
+  @keyframes gridPulse { from{opacity:0.5} to{opacity:1} }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  @keyframes expandIn { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes particleFall { 0%{opacity:0;transform:translateY(-10px)} 10%{opacity:0.6} 90%{opacity:0.2} 100%{opacity:0;transform:translateY(100vh)} }
+
+  /* REVEAL */
+  .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.6s,transform 0.6s; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  /* HERO */
+  .hero { position:relative; min-height:calc(100vh - 80px); display:flex; align-items:center; justify-content:center; text-align:center; padding:60px 40px; overflow:hidden; }
+  .hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(255,87,34,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,87,34,0.05) 1px,transparent 1px); background-size:60px 60px; animation:gridPulse 4s ease-in-out infinite alternate; }
+  .orb { position:absolute; border-radius:50%; filter:blur(80px); animation:orbFloat 8s ease-in-out infinite; pointer-events:none; }
+  .orb-1 { width:500px; height:500px; background:rgba(255,87,34,0.15); top:-100px; right:-100px; }
+  .orb-2 { width:300px; height:300px; background:rgba(255,120,60,0.1); bottom:0; left:-50px; animation-delay:-3s; }
+  .orb-3 { width:200px; height:200px; background:rgba(255,87,34,0.08); top:40%; left:20%; animation-delay:-5s; }
+  .hero-content { position:relative; z-index:2; max-width:860px; }
+  .hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(255,87,34,0.15); border:1px solid rgba(255,87,34,0.3); color:var(--orange-light); padding:6px 16px; border-radius:100px; font-size:13px; font-weight:500; margin-bottom:32px; animation:fadeInDown 0.8s ease both; }
+  .badge-dot { width:6px; height:6px; background:var(--orange); border-radius:50%; animation:blink 2s ease-in-out infinite; }
+  .hero h1 { font-family:'Syne',sans-serif; font-size:clamp(42px,6vw,76px); font-weight:800; line-height:1.04; letter-spacing:-0.02em; margin-bottom:24px; animation:fadeInUp 0.8s 0.2s ease both; }
+  .hero h1 .highlight { background:linear-gradient(135deg,var(--orange),var(--orange-light),#FFB74D); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .hero p { font-size:18px; color:var(--text-dim); line-height:1.7; margin-bottom:40px; animation:fadeInUp 0.8s 0.4s ease both; }
+  .hero-buttons { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; animation:fadeInUp 0.8s 0.6s ease both; }
+
+  /* BUTTONS */
+  .btn-primary { background:var(--orange); color:#fff; border:none; padding:16px 36px; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:16px; font-weight:600; cursor:none; transition:all 0.3s; position:relative; overflow:hidden; }
+  .btn-primary::after { content:''; position:absolute; inset:0; background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.2) 50%,transparent 70%); transform:translateX(-100%); transition:transform 0.5s; }
+  .btn-primary:hover { background:var(--orange-light); transform:translateY(-2px); box-shadow:0 20px 40px rgba(255,87,34,0.4); }
+  .btn-primary:hover::after { transform:translateX(100%); }
+  .btn-secondary { background:transparent; color:#fff; border:1px solid var(--border); padding:16px 36px; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:16px; font-weight:500; cursor:none; transition:all 0.3s; }
+  .btn-secondary:hover { border-color:rgba(255,87,34,0.5); color:var(--orange-light); transform:translateY(-2px); }
+
+  /* STATS */
+  .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+  .stat { background:var(--dark); padding:40px 20px; text-align:center; transition:background 0.3s; }
+  .stat:hover { background:var(--dark2); }
+  .stat-num { font-family:'Syne',sans-serif; font-size:46px; font-weight:800; color:var(--orange); display:block; }
+  .stat-suf { font-family:'Syne',sans-serif; font-size:36px; font-weight:800; color:var(--orange); }
+  .stat-label { font-size:13px; color:var(--text-muted); margin-top:6px; }
+
+  /* SECTIONS */
+  .section { padding:100px 60px; }
+  .section-label { font-size:12px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--orange); margin-bottom:16px; display:block; }
+  .section-title { font-family:'Syne',sans-serif; font-size:clamp(28px,4vw,50px); font-weight:800; line-height:1.1; letter-spacing:-0.02em; margin-bottom:16px; }
+  .section-sub { color:var(--text-dim); font-size:17px; line-height:1.7; margin-bottom:60px; max-width:560px; }
+
+  /* FEATURES */
+  .features-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+  .feature-card { background:var(--dark2); padding:40px; transition:background 0.3s; position:relative; overflow:hidden; }
+  .feature-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--orange),transparent); transform:scaleX(0); transition:transform 0.4s; }
+  .feature-card:hover { background:var(--dark3); }
+  .feature-card:hover::before { transform:scaleX(1); }
+  .feature-icon { width:50px; height:50px; background:rgba(255,87,34,0.1); border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:24px; font-size:22px; transition:background 0.3s,transform 0.3s; }
+  .feature-card:hover .feature-icon { background:rgba(255,87,34,0.2); transform:scale(1.1); }
+  .feature-card h3 { font-family:'Syne',sans-serif; font-size:20px; font-weight:700; margin-bottom:12px; }
+  .feature-card p { font-size:14px; color:var(--text-muted); line-height:1.7; }
+
+  /* HOME SOLUTIONS */
+  .home-sols { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:24px; }
+  .home-sol-card { background:var(--dark3); border:1px solid var(--border); border-radius:16px; padding:36px; transition:all 0.3s; cursor:none; position:relative; overflow:hidden; }
+  .home-sol-card::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at top left,rgba(255,87,34,0.08),transparent 60%); opacity:0; transition:opacity 0.4s; }
+  .home-sol-card:hover { border-color:rgba(255,87,34,0.35); transform:translateY(-4px); box-shadow:0 24px 50px rgba(0,0,0,0.4); }
+  .home-sol-card:hover::before { opacity:1; }
+  .hs-icon { width:52px; height:52px; background:rgba(255,87,34,0.1); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:22px; }
+  .home-sol-card h3 { font-family:'Syne',sans-serif; font-size:20px; font-weight:700; margin-bottom:10px; }
+  .home-sol-card p { font-size:14px; color:var(--text-muted); line-height:1.7; }
+
+  /* PROCESS */
+  .process-steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:30px; counter-reset:step; }
+  .process-step { counter-increment:step; position:relative; }
+  .process-step::before { content:counter(step,'0'); font-family:'Syne',sans-serif; font-size:72px; font-weight:800; color:rgba(255,87,34,0.06); position:absolute; top:-10px; left:0; line-height:1; }
+  .ps-inner { position:relative; z-index:1; padding:30px; background:var(--dark3); border:1px solid var(--border); border-radius:16px; }
+  .ps-num { width:36px; height:36px; background:var(--orange); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; margin-bottom:18px; }
+  .ps-inner h3 { font-family:'Syne',sans-serif; font-size:18px; font-weight:700; margin-bottom:10px; }
+  .ps-inner p { font-size:14px; color:var(--text-muted); line-height:1.7; }
+
+  /* TESTIMONIALS */
+  .testimonials-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; }
+  .testi-card { background:var(--dark3); border:1px solid var(--border); border-radius:16px; padding:32px; transition:border-color 0.3s; }
+  .testi-card:hover { border-color:rgba(255,87,34,0.25); }
+  .testi-stars { color:var(--orange); font-size:16px; margin-bottom:16px; letter-spacing:2px; }
+  .testi-text { font-size:15px; color:var(--text-dim); line-height:1.8; margin-bottom:24px; font-style:italic; }
+  .testi-author { display:flex; align-items:center; gap:12px; }
+  .testi-avatar { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,var(--orange),var(--orange-light)); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:16px; flex-shrink:0; }
+  .testi-name { font-weight:600; font-size:15px; }
+  .testi-role { font-size:12px; color:var(--text-muted); }
+
+  /* BLOG */
+  .blog-wrap { padding:0 60px 60px; max-width:1240px; margin:0 auto; }
+  .blog-featured { display:grid; grid-template-columns:1.3fr 1fr; gap:24px; margin-bottom:24px; }
+  .blog-feature-card { background:linear-gradient(140deg,rgba(255,87,34,0.2),rgba(255,87,34,0.06)); border:1px solid rgba(255,87,34,0.35); border-radius:20px; padding:40px; min-height:320px; display:flex; flex-direction:column; justify-content:space-between; }
+  .blog-feature-card, .blog-small-card, .blog-card { cursor:none; }
+  .blog-meta { font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--orange-light); margin-bottom:14px; display:block; }
+  .blog-feature-card h2 { font-family:'Syne',sans-serif; font-size:clamp(28px,3.2vw,42px); line-height:1.1; margin-bottom:14px; }
+  .blog-feature-card p { color:var(--text-dim); font-size:15px; line-height:1.8; }
+  .blog-small-card { background:var(--dark3); border:1px solid var(--border); border-radius:20px; padding:30px; transition:all 0.3s; }
+  .blog-small-card:hover { border-color:rgba(255,87,34,0.35); transform:translateY(-4px); }
+  .blog-small-card h3 { font-family:'Syne',sans-serif; font-size:24px; margin-bottom:12px; }
+  .blog-small-card p { color:var(--text-muted); font-size:14px; line-height:1.7; }
+  .blog-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px; }
+  .blog-card { background:var(--dark3); border:1px solid var(--border); border-radius:16px; padding:26px; transition:all 0.3s; }
+  .blog-card:hover { border-color:rgba(255,87,34,0.3); transform:translateY(-4px); }
+  .blog-card h3 { font-family:'Syne',sans-serif; font-size:20px; margin-bottom:10px; }
+  .blog-card p { color:var(--text-muted); font-size:14px; line-height:1.7; margin-bottom:16px; }
+  .blog-read { color:var(--orange); font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; }
+  .blog-expand { margin-top:18px; padding-top:16px; border-top:1px solid var(--border); font-size:14px; color:var(--text-dim); line-height:1.75; display:none; animation:expandIn 0.25s ease; }
+  .blog-feature-card.open, .blog-small-card.open, .blog-card.open { border-color:rgba(255,87,34,0.45); box-shadow:0 24px 50px rgba(0,0,0,0.35); }
+
+  /* INDUSTRIES */
+  .industries-wrap { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px; }
+  .industry-pill { background:var(--dark3); border:1px solid var(--border); border-radius:12px; padding:18px 20px; text-align:center; font-size:14px; font-weight:500; transition:all 0.3s; cursor:none; }
+  .industry-pill:hover { border-color:var(--orange); color:var(--orange); transform:translateY(-2px); }
+  .industry-pill .ind-icon { font-size:28px; display:block; margin-bottom:8px; }
+
+  /* CTA BAND */
+  .cta-band { background:linear-gradient(135deg,rgba(255,87,34,0.15),rgba(255,87,34,0.05)); border-top:1px solid rgba(255,87,34,0.2); border-bottom:1px solid rgba(255,87,34,0.2); padding:80px 60px; text-align:center; }
+  .cta-band h2 { font-family:'Syne',sans-serif; font-size:clamp(28px,4vw,48px); font-weight:800; margin-bottom:16px; }
+  .cta-band p { color:var(--text-dim); font-size:18px; margin-bottom:36px; }
+  .cta-buttons { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+
+  /* PAGE HEADER */
+  .page-header { text-align:center; padding:80px 40px 60px; position:relative; }
+  .page-header::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:60px; height:3px; background:var(--orange); border-radius:2px; }
+  .page-header h1 { font-family:'Syne',sans-serif; font-size:clamp(32px,5vw,58px); font-weight:800; letter-spacing:-0.02em; }
+  .page-header p { color:var(--text-dim); font-size:18px; margin-top:14px; }
+
+  /* SOLUTIONS */
+  .solutions-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:24px; padding:60px; }
+  .solution-card { background:var(--dark3); border:1px solid var(--border); border-radius:16px; padding:36px; transition:all 0.4s; cursor:none; position:relative; overflow:hidden; }
+  .solution-card::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at top left,rgba(255,87,34,0.08),transparent 60%); opacity:0; transition:opacity 0.4s; }
+  .solution-card:hover { border-color:rgba(255,87,34,0.3); transform:translateY(-4px); box-shadow:0 30px 60px rgba(0,0,0,0.4); }
+  .solution-card:hover::before { opacity:1; }
+  .sol-icon { width:52px; height:52px; background:rgba(255,87,34,0.1); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:24px; }
+  .solution-card h3 { font-family:'Syne',sans-serif; font-size:22px; font-weight:700; margin-bottom:12px; }
+  .solution-card p { font-size:14px; color:var(--text-muted); line-height:1.7; margin-bottom:20px; }
+  .learn-more-btn { background:none; border:none; color:var(--orange); font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; cursor:none; padding:0; display:flex; align-items:center; gap:6px; transition:gap 0.2s; }
+  .learn-more-btn:hover { gap:10px; }
+  .sol-expanded { margin-top:20px; padding-top:20px; border-top:1px solid var(--border); font-size:14px; color:var(--text-dim); line-height:1.7; animation:expandIn 0.3s ease; }
+
+  /* SERVICES */
+  .services-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px; padding:60px; }
+  .service-card { background:#fff; border-radius:18px; padding:32px; color:var(--dark); transition:all 0.3s; position:relative; overflow:hidden; cursor:none; }
+  .service-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--orange),var(--orange-light)); transform:scaleX(0); transition:transform 0.3s; transform-origin:left; }
+  .service-card:hover { transform:translateY(-6px); box-shadow:0 30px 60px rgba(255,87,34,0.15); }
+  .service-card:hover::after { transform:scaleX(1); }
+  .service-icon { font-size:36px; margin-bottom:20px; }
+  .service-card h3 { font-family:'Syne',sans-serif; font-size:22px; font-weight:700; margin-bottom:12px; color:#111; }
+  .service-card p { font-size:14px; color:#666; line-height:1.7; }
+  .services-cta { text-align:center; padding:0 60px 60px; }
+
+  /* ABOUT */
+  .about-content { padding:60px; max-width:1000px; margin:0 auto; }
+  .about-text { font-size:17px; color:var(--text-dim); line-height:1.9; margin-bottom:20px; }
+  .about-highlight { background:rgba(255,87,34,0.08); border-left:3px solid var(--orange); padding:24px 30px; border-radius:0 12px 12px 0; margin:40px 0; font-size:18px; color:#fff; font-style:italic; }
+  .team-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; margin-top:60px; }
+  .team-card { background:var(--dark3); border:1px solid var(--border); border-radius:16px; padding:32px; transition:all 0.3s; cursor:none; }
+  .team-card:hover { border-color:rgba(255,87,34,0.3); transform:translateY(-4px); }
+  .team-avatar { width:60px; height:60px; background:rgba(255,87,34,0.1); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:26px; margin-bottom:20px; }
+  .team-card h3 { font-family:'Syne',sans-serif; font-size:20px; font-weight:700; margin-bottom:4px; }
+  .team-role { font-size:13px; color:var(--orange); font-weight:600; margin-bottom:14px; }
+  .team-card p { font-size:14px; color:var(--text-muted); line-height:1.7; }
+
+  /* CONTACT PAGE */
+  .contact-gs-wrapper { display:grid; grid-template-columns:1fr 1fr; gap:50px; padding:60px; max-width:1200px; margin:0 auto; align-items:start; }
+  .contact-left h2 { font-family:'Syne',sans-serif; font-size:36px; font-weight:800; margin-bottom:16px; }
+  .contact-left > p { font-size:16px; color:var(--text-dim); line-height:1.8; margin-bottom:36px; }
+  .contact-info-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:36px; }
+  .ci-card { background:var(--dark3); border:1px solid var(--border); border-radius:14px; padding:20px; transition:border-color 0.2s; }
+  .ci-card:hover { border-color:rgba(255,87,34,0.3); }
+  .ci-card .ci-icon { font-size:24px; margin-bottom:10px; }
+  .ci-card h4 { font-size:13px; color:var(--orange); font-weight:600; margin-bottom:5px; }
+  .ci-card p { font-size:13px; color:var(--text-muted); }
+  .connect-points { display:flex; flex-direction:column; gap:18px; }
+  .connect-point { display:flex; align-items:flex-start; gap:14px; }
+  .connect-point-icon { width:40px; height:40px; min-width:40px; background:rgba(255,87,34,0.1); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; }
+  .connect-point-text h4 { font-size:15px; font-weight:600; margin-bottom:3px; }
+  .connect-point-text p { font-size:13px; color:var(--text-muted); }
+
+  /* TABS */
+  .contact-tabs { display:flex; gap:0; margin-bottom:28px; border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+  .ctab { flex:1; padding:14px; background:transparent; border:none; color:var(--text-muted); font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; cursor:none; transition:all 0.2s; }
+  .ctab.active { background:var(--orange); color:#fff; }
+  .ctab:not(.active):hover { color:#fff; background:rgba(255,255,255,0.05); }
+  .tab-panel { display:none; }
+  .tab-panel.active { display:block; animation:expandIn 0.3s ease; }
+
+  /* FORM */
+  .form-card { background:var(--dark3); border:1px solid var(--border); border-radius:20px; padding:36px; }
+  .form-card h3 { font-family:'Syne',sans-serif; font-size:22px; font-weight:700; margin-bottom:24px; }
+  .form-group { margin-bottom:18px; }
+  .form-group label { display:block; font-size:12px; font-weight:500; color:var(--text-muted); margin-bottom:7px; letter-spacing:0.06em; text-transform:uppercase; }
+  .form-group input, .form-group select, .form-group textarea { width:100%; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:10px; padding:13px 15px; color:#fff; font-family:'DM Sans',sans-serif; font-size:15px; transition:border-color 0.2s,background 0.2s; outline:none; cursor:none; }
+  .form-group select option { background:#1a1a1a; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:var(--orange); background:rgba(255,87,34,0.05); }
+  .form-group textarea { resize:vertical; min-height:100px; }
+  .form-group input::placeholder, .form-group textarea::placeholder { color:rgba(255,255,255,0.3); }
+  .form-submit { width:100%; padding:15px; background:var(--orange); color:#fff; border:none; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:16px; font-weight:600; cursor:none; transition:all 0.3s; margin-top:8px; }
+  .form-submit:hover { background:var(--orange-light); transform:translateY(-2px); box-shadow:0 15px 30px rgba(255,87,34,0.35); }
+  .form-success { text-align:center; padding:40px 20px; animation:fadeInUp 0.5s ease both; }
+  .form-success .success-icon { font-size:56px; display:block; margin-bottom:16px; }
+  .form-success h3 { font-family:'Syne',sans-serif; font-size:24px; font-weight:700; margin-bottom:10px; }
+  .form-success p { color:var(--text-dim); }
+
+  /* PARTICLES */
+  .particle { position:fixed; width:2px; height:2px; background:var(--orange); border-radius:50%; pointer-events:none; z-index:1; opacity:0; animation:particleFall linear infinite; }
+
+  /* TOAST */
+  .toast { position:fixed; bottom:30px; right:30px; background:var(--dark3); border:1px solid rgba(255,87,34,0.4); border-radius:12px; padding:14px 22px; color:#fff; font-size:14px; z-index:1000; transform:translateY(20px); opacity:0; transition:all 0.4s; max-width:300px; }
+  .toast.show { transform:translateY(0); opacity:1; }
+
+  /* ===== FOOTER ===== */
+  .site-footer { background:#0D0D0D; border-top:1px solid var(--border); padding:70px 60px 0; }
+  .footer-top { display:grid; grid-template-columns:2fr 1fr 1fr 1.2fr; gap:50px; padding-bottom:50px; }
+  .footer-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:22px; display:flex; align-items:center; gap:8px; margin-bottom:16px; }
+  .footer-brand > p { font-size:14px; color:var(--text-muted); line-height:1.8; max-width:300px; margin-bottom:24px; }
+  .fci-row { display:flex; align-items:center; gap:10px; font-size:14px; color:var(--text-muted); margin-bottom:10px; }
+  .fci-row .fci { color:var(--orange); font-size:16px; }
+  .footer-col h4 { font-family:'Syne',sans-serif; font-size:16px; font-weight:700; color:var(--orange); margin-bottom:20px; }
+  .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .footer-col ul li a { font-size:14px; color:var(--text-muted); text-decoration:none; transition:color 0.2s; cursor:none; }
+  .footer-col ul li a:hover { color:#fff; }
+  .footer-bottom { border-top:1px solid var(--border); padding:24px 0; display:flex; align-items:center; justify-content:space-between; }
+  .footer-bottom p { font-size:13px; color:var(--text-muted); }
+  .footer-badge { font-size:13px; color:var(--text-muted); display:flex; align-items:center; gap:6px; }
+
+  @media(max-width:900px) {
+    nav { padding:16px 24px; }
+    .nav-links { display:none; }
+    .section, .solutions-grid, .services-grid, .contact-gs-wrapper, .about-content, .cta-band, .site-footer { padding:40px 24px; }
+    .stats { grid-template-columns:repeat(2,1fr); }
+    .contact-gs-wrapper { grid-template-columns:1fr; }
+    .footer-top { grid-template-columns:1fr 1fr; gap:30px; }
+    .footer-bottom { flex-direction:column; gap:12px; text-align:center; }
+    .contact-info-grid { grid-template-columns:1fr; }
+    .blog-wrap { padding:0 24px 40px; }
+    .blog-featured { grid-template-columns:1fr; }
+  }
+
+
+
+
+
+  /* ===== MOBILE FIXES ===== */
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.section,
+.solutions-grid,
+.services-grid,
+.contact-gs-wrapper,
+.about-content,
+.cta-band,
+.site-footer {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Fix Large Padding On Mobile */
+@media (max-width: 768px) {
+
+  nav {
+    padding: 14px 18px !important;
+  }
+
+  .hero {
+    padding: 40px 20px !important;
+  }
+
+  .section {
+    padding: 60px 20px !important;
+  }
+
+  .solutions-grid,
+  .services-grid,
+  .contact-gs-wrapper,
+  .about-content {
+    padding: 40px 20px !important;
+  }
+
+  .cta-band {
+    padding: 60px 20px !important;
+  }
+
+  .site-footer {
+    padding: 50px 20px 0 !important;
+  }
+
+  /* Stack grids properly */
+  .stats {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .blog-featured {
+    grid-template-columns: 1fr !important;
+  }
+
+  .contact-gs-wrapper {
+    grid-template-columns: 1fr !important;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Fix hero text overflow */
+  .hero h1 {
+    font-size: 32px !important;
+  }
+
+  .hero p {
+    font-size: 15px !important;
+  }
+
+  /* Disable huge floating orbs */
+  .orb {
+    display: none;
+  }
+
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+<div class="toast" id="toast"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo" onclick="showPage('home')"><span class="logo-dot"></span>NexaMind AI</a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home')" class="nav-link active" data-page="home">Home</a></li>
+    <li><a href="#" onclick="showPage('solutions')" class="nav-link" data-page="solutions">Solutions</a></li>
+    <!-- <li><a href="#" onclick="showPage('services')" class="nav-link" data-page="services">Services</a></li> -->
+    <li><a href="#" onclick="showPage('about')" class="nav-link" data-page="about">About Us</a></li>
+    <li><a href="#" onclick="showPage('blog')" class="nav-link" data-page="blog">Blog</a></li>
+    <li><a href="#" onclick="showPage('contact')" class="nav-link" data-page="contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="showPage('contact')">Get Started</button>
+</nav>
+
+<!-- ======================== HOME ======================== -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+    <div class="hero-content">
+      <div class="hero-badge"><span class="badge-dot"></span> New: GPT-5 Integration Now Live</div>
+      <h1>Revolutionize Your Workflow<br>with <span class="highlight">AI Automation</span></h1>
+      <p>The all-in-one AI platform for startups and enterprises to deploy intelligent agents, automate workflows, and scale smarter — in seconds.</p>
+      <div class="hero-buttons">
+        <button class="btn-primary" onclick="showPage('contact')">Get Started for Free</button>
+        <button class="btn-secondary" onclick="showPage('services')">Explore Services →</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stat reveal"><span class="stat-num" data-target="500">0</span><span class="stat-suf">+</span><div class="stat-label">Enterprise Clients</div></div>
+    <div class="stat reveal"><span class="stat-num" data-target="99">0</span><span class="stat-suf">%</span><div class="stat-label">Accuracy Rate</div></div>
+    <div class="stat reveal"><span class="stat-num" data-target="10">0</span><span class="stat-suf">M+</span><div class="stat-label">API Calls / Month</div></div>
+    <div class="stat reveal"><span class="stat-num" data-target="24">0</span><span class="stat-suf">/7</span><div class="stat-label">Uptime Monitoring</div></div>
+  </div>
+
+  <section class="section">
+    <span class="section-label">Core Capabilities</span>
+    <div class="section-title">Built for scale.<br>Designed for impact.</div>
+    <p class="section-sub">Everything you need to integrate, automate, and amplify your business with the power of AI.</p>
+    <div class="features-grid">
+      <div class="feature-card reveal"><div class="feature-icon">⚡</div><h3>Neural Processing</h3><p>Lightning-fast inference with sub-100ms latency on our distributed GPU clusters. Scale instantly across global regions without downtime.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">🔒</div><h3>Secure API</h3><p>End-to-end encrypted pipelines with SOC 2 compliance, zero-knowledge architecture, and enterprise-grade role-based access control.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">📊</div><h3>24/7 Monitoring</h3><p>Real-time performance dashboards, anomaly detection, and automated alerting to keep your AI workflows healthy around the clock.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">🤖</div><h3>AI Agents</h3><p>Deploy fully autonomous agents that handle complex multi-step workflows, from lead generation to customer onboarding — zero human input.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">🔗</div><h3>100+ Integrations</h3><p>Connect with Salesforce, HubSpot, Slack, Notion, Zapier, and more — with one-click integrations and a fully open API platform.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">📈</div><h3>Predictive Analytics</h3><p>Forecast business outcomes, customer churn, and market shifts using models that improve automatically over time with your data.</p></div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <span class="section-label">Our Solutions</span>
+    <div class="section-title">AI tailored to<br>your business needs.</div>
+    <p class="section-sub">From intelligent chatbots to automated calling systems — we build AI that works the way your business works.</p>
+    <div class="home-sols">
+      <div class="home-sol-card reveal"><div class="hs-icon">💬</div><h3>AI Chatbot</h3><p>Human-like conversational agents for 24/7 support and lead qualification — trained on your data.</p></div>
+      <div class="home-sol-card reveal"><div class="hs-icon">🎯</div><h3>Lead Generation</h3><p>Identify, score, and nurture high-quality leads automatically using AI that understands buyer intent.</p></div>
+      <div class="home-sol-card reveal"><div class="hs-icon">📧</div><h3>Cold Email Automation</h3><p>Hyper-personalized outreach sequences that achieve 3–5× higher open rates and 2× more booked meetings.</p></div>
+      <div class="home-sol-card reveal"><div class="hs-icon">📞</div><h3>Saas platform</h3><p>AI voice agents that qualify leads, handle objections, and schedule meetings across hundreds of simultaneous calls.</p></div>
+      <div class="home-sol-card reveal"><div class="hs-icon">👥</div><h3>HR Flows</h3><p>Automate candidate screening, onboarding workflows, and employee Q&A — reduce HR overhead by 70%.</p></div>
+      <!-- <div class="home-sol-card reveal"><div class="hs-icon">👁️</div><h3>Computer Vision</h3><p>Object detection, quality inspection, and visual intelligence for retail, manufacturing, and security.</p></div> -->
+    </div>
+    <div style="text-align:center;margin-top:40px"><button class="btn-primary" onclick="showPage('solutions')">View All Solutions →</button></div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <span class="section-label">How It Works</span>
+    <div class="section-title">From zero to AI-powered<br>in 4 simple steps.</div>
+    <p class="section-sub">Our streamlined onboarding gets your AI systems live in days, not months.</p>
+    <div class="process-steps">
+      <div class="process-step reveal"><div class="ps-inner"><div class="ps-num">01</div><h3>Discovery Call</h3><p>We learn your business goals, pain points, and tech stack to identify the highest-impact AI opportunities.</p></div></div>
+      <div class="process-step reveal"><div class="ps-inner"><div class="ps-num">02</div><h3>Custom Blueprint</h3><p>Our engineers design a tailored AI architecture — models, workflows, and integrations built specifically for you.</p></div></div>
+      <div class="process-step reveal"><div class="ps-inner"><div class="ps-num">03</div><h3>Build & Train</h3><p>We develop, fine-tune, and rigorously test your AI system on real data before launch.</p></div></div>
+      <div class="process-step reveal"><div class="ps-inner"><div class="ps-num">04</div><h3>Deploy & Scale</h3><p>Go live on secure cloud infrastructure with full monitoring. We optimize continuously as you grow.</p></div></div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <span class="section-label">Industries We Serve</span>
+    <div class="section-title">AI for every industry.</div>
+    <p class="section-sub">We bring proven AI expertise across 10+ verticals.</p>
+    <div class="industries-wrap">
+      <div class="industry-pill reveal"><span class="ind-icon">🏦</span>Fintech</div>
+      <div class="industry-pill reveal"><span class="ind-icon">🏥</span>Healthcare</div>
+      <div class="industry-pill reveal"><span class="ind-icon">🛒</span>E-commerce</div>
+      <div class="industry-pill reveal"><span class="ind-icon">🚚</span>Logistics</div>
+      <div class="industry-pill reveal"><span class="ind-icon">🏭</span>Manufacturing</div>
+      <div class="industry-pill reveal"><span class="ind-icon">🎓</span>Education</div>
+      <div class="industry-pill reveal"><span class="ind-icon">🏨</span>Hospitality</div>
+      <div class="industry-pill reveal"><span class="ind-icon">📱</span>SaaS</div>
+      <div class="industry-pill reveal"><span class="ind-icon">🏗️</span>Real Estate</div>
+      <!-- <div class="industry-pill reveal"><span class="ind-icon">⚖️</span>Legal</div> -->
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <span class="section-label">Client Stories</span>
+    <div class="section-title">Trusted by teams<br>that move fast.</div>
+    <p class="section-sub">Hear from businesses that scaled with NexaMind AI.</p>
+    <div class="testimonials-grid">
+      <div class="testi-card reveal"><div class="testi-stars">★★★★★</div><p class="testi-text">"NexaMind's chatbot reduced our support ticket volume by 68% in the first month. The ROI was immediate and the team was exceptional throughout."</p><div class="testi-author"><div class="testi-avatar">R</div><div><div class="testi-name">Rajiv Mehta</div><div class="testi-role">CTO, FinEdge Technologies</div></div></div></div>
+      <div class="testi-card reveal"><div class="testi-stars">★★★★★</div><p class="testi-text">"Their lead generation AI tripled our qualified pipeline within 6 weeks. It's like having 10 extra sales reps working around the clock."</p><div class="testi-author"><div class="testi-avatar">P</div><div><div class="testi-name">Priya Sharma</div><div class="testi-role">VP Sales, GrowthLoop SaaS</div></div></div></div>
+      <div class="testi-card reveal"><div class="testi-stars">★★★★★</div><p class="testi-text">"The Saas platform handles 300+ daily outbound calls with human-like quality. Our booking rate jumped 40% and team can focus on closing."</p><div class="testi-author"><div class="testi-avatar">A</div><div><div class="testi-name">Arjun Nair</div><div class="testi-role">Founder, ScaleUp Ventures</div></div></div></div>
+    </div>
+  </section>
+
+  <div class="cta-band reveal">
+    <h2>Ready to automate your<br>business with AI?</h2>
+    <p>Join 500+ companies already scaling smarter with NexaMind AI.</p>
+    <div class="cta-buttons">
+      <button class="btn-primary" onclick="showPage('contact')">Start for Free Today</button>
+      <button class="btn-secondary" onclick="showPage('about')">Meet the Team</button>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo"><span class="logo-dot"></span>NexaMind AI</div>
+        <p>A Delhi-based event management company delivering impactful, technology-driven, and seamlessly executed event experiences across India.</p>
+        <div class="fci-row"><span class="fci">📍</span> Delhi, India</div>
+        <div class="fci-row"><span class="fci">✉️</span> contact@ddeevents.com</div>
+        <div class="fci-row"><span class="fci">📞</span> +91 9625961246 ,+91 9693856529</div>
+      </div>
+      <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#" onclick="showPage('home')">Home</a></li><li><a href="#" onclick="showPage('solutions')">Solutions</a></li><li><a href="#" onclick="showPage('services')">Services</a></li><li><a href="#" onclick="showPage('about')">About Us</a></li><li><a href="#" onclick="showPage('blog')">Blog</a></li><li><a href="#" onclick="showPage('contact')">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>About</h4><ul><li><a href="#" onclick="showPage('about')">Our Company</a></li><li><a href="#" onclick="showPage('about')">Leadership Team</a></li><li><a href="#">Our Partners</a></li><li><a href="#">Case Studies</a></li><li><a href="#" onclick="showPage('contact')">Careers</a></li></ul></div>
+      <div class="footer-col"><h4>Services</h4><ul><li><a href="#">AI Chatbot</a></li><li><a href="#">Lead Generation</a></li><li><a href="#">Cold Email Automation</a></li><li><a href="#">Saas platform</a></li><li>
+        <!-- <a href="#">Computer Vision</a> -->
+      </li><li><a href="#">HR Flows</a></li><li><a href="#">Predictive Analytics</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 NexaMind AI. All Rights Reserved.</p><div class="footer-badge">Proudly Made in India 🇮🇳</div></div>
+  </footer>
+</div>
+
+<!-- ======================== SOLUTIONS ======================== -->
+<div class="page" id="page-solutions">
+  <div class="page-header"><span class="section-label">What We Build</span><h1>Tailored AI Solutions</h1><p>We help businesses automate complex tasks using cutting-edge Neural Networks.</p></div>
+  <div class="solutions-grid">
+    <div class="solution-card reveal" data-sol="0"><div class="sol-icon">💬</div><h3>AI Chat-Bot</h3><p>Intelligent conversational agents for customer support, lead qualification, and automation — trained on your data.</p><button class="learn-more-btn" onclick="toggleSol(0)">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button><div class="sol-expanded" id="sol-0" style="display:none">Our AI chatbot platform leverages state-of-the-art NLP to provide human-like responses and manage complex customer queries 24/7 without human intervention, drastically reducing operational costs while improving satisfaction by up to 60%.</div></div>
+    <div class="solution-card reveal" data-sol="1"><div class="sol-icon">👥</div><h3>HR Flows</h3><p>Automate candidate screening, onboarding, and policy Q&A with AI that understands context and intent.</p><button class="learn-more-btn" onclick="toggleSol(1)">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button><div class="sol-expanded" id="sol-1" style="display:none">Automate your HR processes from candidate screening and onboarding to performance tracking with AI that understands tone and intent. Reduce HR overhead by up to 70% while improving employee experience significantly.</div></div>
+    <div class="solution-card reveal" data-sol="2"><div class="sol-icon">🎯</div><h3>Lead Generation</h3><p>AI that identifies, scores, and nurtures high-quality leads using behavioral signals and intent data.</p><button class="learn-more-btn" onclick="toggleSol(2)">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button><div class="sol-expanded" id="sol-2" style="display:none">Our AI lead generation engine analyzes behavioral signals, firmographic data, and intent markers to deliver conversion-ready leads. Integrates seamlessly with CRM platforms and adapts to your ideal customer profile over time.</div></div>
+    <div class="solution-card reveal" data-sol="3"><div class="sol-icon">📧</div><h3>Cold Email Automation</h3><p>AI-crafted, personalized outreach that achieves 3–5× higher open rates and 2× more booked meetings.</p><button class="learn-more-btn" onclick="toggleSol(3)">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button><div class="sol-expanded" id="sol-3" style="display:none">Craft hyper-personalized cold emails at scale using AI that researches each prospect, writes compelling copy, optimizes send timing, and tracks replies — all fully automated and continuously improving.</div></div>
+    <div class="solution-card reveal" data-sol="4"><div class="sol-icon">📞</div><h3>SaaS platform</h3><p>AI voice agents that qualify leads, schedule meetings, and handle inbound calls 24/7 at massive scale.</p><button class="learn-more-btn" onclick="toggleSol(4)">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button><div class="sol-expanded" id="sol-4" style="display:none">Deploy AI voice agents that sound and respond like trained sales reps. Handle hundreds of simultaneous calls, qualify prospects using your scripts, and auto-schedule meetings directly into your calendar with zero downtime.</div></div>
+    <!-- <div class="solution-card reveal" data-sol="5"><div class="sol-icon">👁️</div><h3>Computer Vision</h3><p>Object detection and image recognition for security, retail, manufacturing, and healthcare applications.</p><button class="learn-more-btn" onclick="toggleSol(5)">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button><div class="sol-expanded" id="sol-5" style="display:none">Object detection enables computers to interpret visual data like humans. Key applications include autonomous navigation, security surveillance, quality control, and medical imaging analysis with real-time processing capabilities.</div></div> -->
+  </div>
+  <div style="text-align:center;padding:0 60px 60px"><button class="btn-primary" onclick="showPage('contact')">Start Building Your Solution →</button></div>
+  <footer class="site-footer"><div class="footer-top"><div class="footer-brand"><div class="footer-logo"><span class="logo-dot"></span>NexaMind AI</div><p>A Bangalore-based AI company delivering impactful, technology-driven automation solutions across India and globally.</p><div class="fci-row"><span class="fci">📍</span> Bangalore, India</div><div class="fci-row"><span class="fci">✉️</span> hello@nexamind.ai</div><div class="fci-row"><span class="fci">📞</span> +91 98765 43210</div></div><div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#" onclick="showPage('home')">Home</a></li><li><a href="#" onclick="showPage('solutions')">Solutions</a></li><li><a href="#" onclick="showPage('services')">Services</a></li><li><a href="#" onclick="showPage('about')">About Us</a></li><li><a href="#" onclick="showPage('blog')">Blog</a></li><li><a href="#" onclick="showPage('contact')">Contact</a></li></ul></div><div class="footer-col"><h4>About</h4><ul><li><a href="#" onclick="showPage('about')">Our Company</a></li><li><a href="#" onclick="showPage('about')">Leadership Team</a></li><li><a href="#">Our Partners</a></li><li><a href="#">Case Studies</a></li><li><a href="#" onclick="showPage('contact')">Careers</a></li></ul></div><div class="footer-col"><h4>Services</h4><ul><li><a href="#">AI Chatbot</a></li><li><a href="#">Lead Generation</a></li><li><a href="#">Cold Email Automation</a></li><li><a href="#">SaaS platform</a></li><li><a href="#">Computer Vision</a></li><li><a href="#">HR Flows</a></li><li><a href="#">Predictive Analytics</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 NexaMind AI. All Rights Reserved.</p><div class="footer-badge">Proudly Made in India 🇮🇳</div></div></footer>
+</div>
+
+<!-- ======================== SERVICES ======================== -->
+<div class="page" id="page-services">
+  <div class="page-header"><span class="section-label">Our AI Services</span><h1>Explore Our AI Services</h1><p>Powerful AI capabilities designed for real-world applications</p></div>
+  <div class="services-grid">
+    <div class="service-card reveal"><div class="service-icon">💬</div><h3>AI Chatbot</h3><p>Build intelligent conversational agents for customer support and engagement, powered by latest LLMs with custom training on your data.</p></div>
+    <div class="service-card reveal"><div class="service-icon">📈</div><h3>Predictive Analytics</h3><p>Forecast trends, user behavior, and business outcomes using data-driven AI models. Get actionable insights before your competition does.</p></div>
+    <div class="service-card reveal"><div class="service-icon">👁️</div><h3>Computer Vision</h3><p>Analyze images and videos for object detection, recognition, and visual intelligence — from quality control to security surveillance.</p></div>
+    <div class="service-card reveal"><div class="service-icon">📄</div><h3>Document AI</h3><p>Extract insights from documents using OCR, classification, and intelligent parsing. Process thousands of pages in seconds.</p></div>
+    <div class="service-card reveal"><div class="service-icon">🗣️</div><h3>Voice AI</h3><p>Natural language voice agents for customer calls, IVR replacement, and real-time transcription with sentiment analysis.</p></div>
+    <div class="service-card reveal"><div class="service-icon">🔄</div><h3>Workflow Automation</h3><p>Replace manual repetitive tasks with intelligent AI pipelines that adapt, learn, and improve continuously over time.</p></div>
+    <div class="service-card reveal"><div class="service-icon">🔍</div><h3>AI Search & Discovery</h3><p>Semantic search engines and recommendation systems that surface the right information to the right people instantly.</p></div>
+    <div class="service-card reveal"><div class="service-icon">🧠</div><h3>Custom Model Training</h3><p>Fine-tune and deploy bespoke AI models trained on your proprietary data for domain-specific intelligence that generic models can't match.</p></div>
+  </div>
+  <div class="services-cta"><button class="btn-primary" onclick="showPage('contact')">Connect For Solutions →</button></div>
+  <footer class="site-footer"><div class="footer-top"><div class="footer-brand"><div class="footer-logo"><span class="logo-dot"></span>NexaMind AI</div><p>A Bangalore-based AI company delivering impactful, technology-driven automation solutions across India and globally.</p><div class="fci-row"><span class="fci">📍</span> Bangalore, India</div><div class="fci-row"><span class="fci">✉️</span> hello@nexamind.ai</div><div class="fci-row"><span class="fci">📞</span> +91 98765 43210</div></div><div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#" onclick="showPage('home')">Home</a></li><li><a href="#" onclick="showPage('solutions')">Solutions</a></li><li><a href="#" onclick="showPage('services')">Services</a></li><li><a href="#" onclick="showPage('about')">About Us</a></li><li><a href="#" onclick="showPage('blog')">Blog</a></li><li><a href="#" onclick="showPage('contact')">Contact</a></li></ul></div><div class="footer-col"><h4>About</h4><ul><li><a href="#" onclick="showPage('about')">Our Company</a></li><li><a href="#" onclick="showPage('about')">Leadership Team</a></li><li><a href="#">Our Partners</a></li><li><a href="#">Case Studies</a></li><li><a href="#" onclick="showPage('contact')">Careers</a></li></ul></div><div class="footer-col"><h4>Services</h4><ul><li><a href="#">AI Chatbot</a></li><li><a href="#">Lead Generation</a></li><li><a href="#">Cold Email Automation</a></li><li><a href="#">SaaS platform</a></li><li><a href="#">Computer Vision</a></li><li><a href="#">HR Flows</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 NexaMind AI. All Rights Reserved.</p><div class="footer-badge">Proudly Made in India 🇮🇳</div></div></footer>
+</div>
+
+<!-- ======================== ABOUT ======================== -->
+<div class="page" id="page-about">
+  <div class="page-header"><span class="section-label">Who We Are</span><h1>Driving Innovation Through<br>Artificial Intelligence</h1><p>Founded in 2020 in the heart of the tech revolution</p></div>
+  <div class="about-content">
+    <p class="about-text reveal">Founded in 2020, Dynamix Dazzel AI is a technology-driven company focused on building intelligent automation solutions for modern businesses. We specialize in leveraging artificial intelligence, machine learning, and data-driven systems to solve real-world operational challenges.</p>
+    <div class="about-highlight reveal">"Our mission is simple: help organizations scale faster, reduce costs, and make smarter decisions by integrating AI into their everyday workflows."</div>
+    <p class="about-text reveal">From AI-powered chatbots and lead generation systems to workflow automation and predictive analytics, we design solutions that deliver measurable impact. Today, NexaMind AI works with startups, enterprises, and global clients across industries including fintech, healthcare, e-commerce, and logistics.</p>
+    <p class="about-text reveal">Our team of 50+ researchers, engineers, and strategists are united by a common belief: that AI should be accessible, ethical, and transformative — not just for tech companies, but for every organization ready to evolve.</p>
+    <h2 style="font-family:'Syne',sans-serif;font-size:36px;font-weight:800;margin-top:70px;margin-bottom:0">Leadership Team</h2>
+    <div class="team-grid">
+      <div class="team-card reveal"><div class="team-avatar">💼</div><h3>Kuldeep Singh</h3><div class="team-role">Founder & CEO</div><p>Technology entrepreneur with over 3 years of experience in AI-driven products and business strategy. Leads NexaMind AI's vision, partnerships, and global expansion.</p></div>
+      <div class="team-card reveal"><div class="team-avatar">🧠</div><h3>Animesh Singh</h3><div class="team-role">Chief Technology Officer</div><p>Holds a degree in Artificial Intelligence and has led multiple large-scale AI deployments. Oversees product architecture, research, and innovation at NexaMind AI.</p></div>
+      <div class="team-card reveal"><div class="team-avatar">⚙️</div><h3>Maaz Anwar</h3><div class="team-role">Head of AI Engineering</div><p>Specializes in machine learning systems and automation pipelines. Leads the engineering team ensuring scalable, secure, and high-performance AI solutions.</p></div>
+    </div>
+  </div>
+  <footer class="site-footer" style="margin-top:60px"><div class="footer-top"><div class="footer-brand"><div class="footer-logo"><span class="logo-dot"></span>NexaMind AI</div><p>A Bangalore-based AI company delivering impactful, technology-driven automation solutions across India and globally.</p><div class="fci-row"><span class="fci">📍</span> Bangalore, India</div><div class="fci-row"><span class="fci">✉️</span> hello@nexamind.ai</div><div class="fci-row"><span class="fci">📞</span> +91 98765 43210</div></div><div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#" onclick="showPage('home')">Home</a></li><li><a href="#" onclick="showPage('solutions')">Solutions</a></li><li><a href="#" onclick="showPage('services')">Services</a></li><li><a href="#" onclick="showPage('about')">About Us</a></li><li><a href="#" onclick="showPage('blog')">Blog</a></li><li><a href="#" onclick="showPage('contact')">Contact</a></li></ul></div><div class="footer-col"><h4>About</h4><ul><li><a href="#" onclick="showPage('about')">Our Company</a></li><li><a href="#" onclick="showPage('about')">Leadership Team</a></li><li><a href="#">Our Partners</a></li><li><a href="#">Case Studies</a></li><li><a href="#" onclick="showPage('contact')">Careers</a></li></ul></div><div class="footer-col"><h4>Services</h4><ul><li><a href="#">AI Chatbot</a></li><li><a href="#">Lead Generation</a></li><li><a href="#">Cold Email Automation</a></li><li><a href="#">SaaS platform</a></li><li><a href="#">Computer Vision</a></li><li><a href="#">HR Flows</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 NexaMind AI. All Rights Reserved.</p><div class="footer-badge">Proudly Made in India 🇮🇳</div></div></footer>
+</div>
+
+<!-- ======================== BLOG ======================== -->
+<div class="page" id="page-blog">
+  <div class="page-header"><span class="section-label">Insights</span><h1>NexaMind AI Blog</h1><p>Practical guides, trends, and playbooks for teams building with AI.</p></div>
+  <div class="blog-wrap">
+    <div class="blog-featured">
+      <article class="blog-feature-card reveal" data-blog="b0" onclick="toggleBlog('b0')">
+        <div>
+          <span class="blog-meta">Featured • Automation Strategy</span>
+          <h2>How to Deploy AI Agents in 30 Days Without Breaking Existing Workflows</h2>
+          <p>A practical rollout framework covering scope, integrations, governance, and team onboarding so your first AI launch drives measurable ROI fast.</p>
+        </div>
+        <span class="blog-read" id="blog-read-b0" data-default="Read Featured Story →">Read Featured Story →</span>
+        <div class="blog-expand" id="blog-expand-b0">This guide breaks deployment into four phases: process audit, agent pilot, workflow integration, and optimization loops. You get a launch checklist, baseline metrics to track from day one, and rollout guardrails to avoid process disruption while increasing output quality.</div>
+      </article>
+      <article class="blog-small-card reveal" data-blog="b1" onclick="toggleBlog('b1')">
+        <span class="blog-meta">Popular • Lead Gen</span>
+        <h3>7 AI outreach sequences that booked 2x more demos</h3>
+        <p>What high-performing GTM teams changed in prompts, timing, and follow-up logic to improve conversion rates.</p>
+        <span class="blog-read" id="blog-read-b1" data-default="Read article →">Read article →</span>
+        <div class="blog-expand" id="blog-expand-b1">The top-performing sequences layered account research, pain-specific hooks, and adaptive follow-ups based on reply intent. The article includes tested timing windows, structure templates, and a scoring model to decide when to escalate to sales.</div>
+      </article>
+    </div>
+    <div class="blog-grid">
+      <article class="blog-card reveal" data-blog="b2" onclick="toggleBlog('b2')"><span class="blog-meta">Product</span><h3>Choosing the right LLM stack for customer support</h3><p>Model routing, fallback logic, and guardrails for stable high-volume support bots.</p><span class="blog-read" id="blog-read-b2" data-default="Read article →">Read article →</span><div class="blog-expand" id="blog-expand-b2">Compare costs per resolved ticket across model tiers, route by ticket complexity, and use confidence thresholds to handoff sensitive or ambiguous cases to humans automatically.</div></article>
+      <article class="blog-card reveal" data-blog="b3" onclick="toggleBlog('b3')"><span class="blog-meta">Operations</span><h3>What to automate first: a 5-step AI prioritization matrix</h3><p>Score internal workflows by impact, complexity, and data readiness before building.</p><span class="blog-read" id="blog-read-b3" data-default="Read article →">Read article →</span><div class="blog-expand" id="blog-expand-b3">The matrix weighs hours saved, risk level, integration effort, and data quality. Use it to select high-impact low-risk workflows first, then sequence advanced automations in later sprints.</div></article>
+      <article class="blog-card reveal" data-blog="b4" onclick="toggleBlog('b4')"><span class="blog-meta">Engineering</span><h3>RAG vs fine-tuning: where each approach actually wins</h3><p>A quick decision guide for teams balancing speed, accuracy, and maintenance overhead.</p><span class="blog-read" id="blog-read-b4" data-default="Read article →">Read article →</span><div class="blog-expand" id="blog-expand-b4">Use RAG when knowledge changes often and observability matters. Fine-tune for fixed behavior, stable format output, or domain-specific style. Hybrid patterns can deliver both freshness and consistency.</div></article>
+      <article class="blog-card reveal" data-blog="b5" onclick="toggleBlog('b5')"><span class="blog-meta">Growth</span><h3>Automating inbound qualification with AI voice agents</h3><p>How to route, score, and book qualified leads in real-time from inbound calls.</p><span class="blog-read" id="blog-read-b5" data-default="Read article →">Read article →</span><div class="blog-expand" id="blog-expand-b5">Build a qualification tree around intent, budget, and urgency. Route qualified callers directly to calendars, send transcript summaries to CRM, and auto-trigger follow-ups for no-show recovery.</div></article>
+      <article class="blog-card reveal" data-blog="b6" onclick="toggleBlog('b6')"><span class="blog-meta">Security</span><h3>Building safe AI workflows with role-based controls</h3><p>Security patterns that protect data while enabling teams to ship automation faster.</p><span class="blog-read" id="blog-read-b6" data-default="Read article →">Read article →</span><div class="blog-expand" id="blog-expand-b6">Define model access by role, isolate sensitive datasets, and enforce action-level permissions for automations. Add trace logs and approval gates for high-impact operations.</div></article>
+      <article class="blog-card reveal" data-blog="b7" onclick="toggleBlog('b7')"><span class="blog-meta">Case Study</span><h3>From manual ops to autonomous pipelines in 8 weeks</h3><p>How one SaaS team reduced repetitive workload by 62% with staged automation.</p><span class="blog-read" id="blog-read-b7" data-default="Read article →">Read article →</span><div class="blog-expand" id="blog-expand-b7">The team started with repetitive onboarding tasks, then expanded into support triage and reporting automation. Weekly QA loops maintained quality while throughput improved each sprint.</div></article>
+    </div>
+  </div>
+  <footer class="site-footer" style="margin-top:20px"><div class="footer-top"><div class="footer-brand"><div class="footer-logo"><span class="logo-dot"></span>NexaMind AI</div><p>A Bangalore-based AI company delivering impactful, technology-driven automation solutions across India and globally.</p><div class="fci-row"><span class="fci">📍</span> Bangalore, India</div><div class="fci-row"><span class="fci">✉️</span> hello@nexamind.ai</div><div class="fci-row"><span class="fci">📞</span> +91 98765 43210</div></div><div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#" onclick="showPage('home')">Home</a></li><li><a href="#" onclick="showPage('solutions')">Solutions</a></li><li><a href="#" onclick="showPage('services')">Services</a></li><li><a href="#" onclick="showPage('about')">About Us</a></li><li><a href="#" onclick="showPage('blog')">Blog</a></li><li><a href="#" onclick="showPage('contact')">Contact</a></li></ul></div><div class="footer-col"><h4>About</h4><ul><li><a href="#" onclick="showPage('about')">Our Company</a></li><li><a href="#" onclick="showPage('about')">Leadership Team</a></li><li><a href="#">Our Partners</a></li><li><a href="#">Case Studies</a></li><li><a href="#" onclick="showPage('contact')">Careers</a></li></ul></div><div class="footer-col"><h4>Services</h4><ul><li><a href="#">AI Chatbot</a></li><li><a href="#">Lead Generation</a></li><li><a href="#">Cold Email Automation</a></li><li><a href="#">SaaS platform</a></li><li><a href="#">Computer Vision</a></li><li><a href="#">HR Flows</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 NexaMind AI. All Rights Reserved.</p><div class="footer-badge">Proudly Made in India 🇮🇳</div></div></footer>
+</div>
+
+<!-- ======================== CONTACT + GET STARTED (MERGED) ======================== -->
+<div class="page" id="page-contact">
+  <div class="page-header"><span class="section-label">Let's Connect</span><h1>Contact & Get Started</h1><p>Reach out to us or create your free account below</p></div>
+  <div class="contact-gs-wrapper">
+    <div class="contact-left reveal">
+      <h2>We'd love to<br>hear from you.</h2>
+      <p>Whether you're looking to explore our AI solutions, schedule a demo, or simply have a question — our team responds within 24 hours.</p>
+      <div class="contact-info-grid">
+        <div class="ci-card"><div class="ci-icon">📧</div><h4>Email</h4><p>hello@nexamind.ai</p></div>
+        <div class="ci-card"><div class="ci-icon">📞</div><h4>Phone</h4><p>+91 98765 43210</p></div>
+        <div class="ci-card"><div class="ci-icon">📍</div><h4>Location</h4><p>Bangalore, India</p></div>
+        <div class="ci-card"><div class="ci-icon">🕐</div><h4>Response Time</h4><p>Within 24 hours</p></div>
+      </div>
+      <div class="connect-points">
+        <div class="connect-point"><div class="connect-point-icon">⚡</div><div class="connect-point-text"><h4>Fast Response</h4><p>We respond to all inquiries within 24 business hours.</p></div></div>
+        <div class="connect-point"><div class="connect-point-icon">🎯</div><div class="connect-point-text"><h4>Tailored Solutions</h4><p>Every solution is customized to your unique business needs.</p></div></div>
+        <div class="connect-point"><div class="connect-point-icon">🔒</div><div class="connect-point-text"><h4>Confidential</h4><p>Your project details are kept completely confidential.</p></div></div>
+      </div>
+    </div>
+
+    <div class="form-card reveal">
+      <div class="contact-tabs">
+        <button class="ctab active" id="tab-contact" onclick="switchTab('contact-tab','tab-contact')">📬 Contact Us</button>
+        <button class="ctab" id="tab-gs" onclick="switchTab('getstarted-tab','tab-gs')">🚀 Get Started</button>
+      </div>
+
+      <div class="tab-panel active" id="contact-tab">
+        <div id="contactMsgForm">
+          <div class="form-group"><label>Full Name</label><input type="text" id="cm-name" placeholder="John Doe"></div>
+          <div class="form-group"><label>Phone Number</label><input type="tel" id="cm-phone" placeholder="+91 98765 43210"></div>
+          <div class="form-group"><label>Email Address</label><input type="email" id="cm-email" placeholder="john@company.com"></div>
+          <div class="form-group"><label>Select a Service</label><select id="cm-service"><option value="">Select a Service</option><option>AI Chatbot</option><option>Lead Generation</option><option>Cold Email Automation</option><option>SaaS platform</option><option>HR Flows</option><option>Computer Vision</option><option>Predictive Analytics</option><option>Custom AI Solution</option></select></div>
+          <div class="form-group"><label>Your Message</label><textarea id="cm-message" placeholder="Tell us about your project or question..."></textarea></div>
+          <button class="form-submit" onclick="submitContactForm()">Submit</button>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="getstarted-tab">
+        <div style="text-align:center;margin-bottom:24px"><span style="font-size:40px">✨</span><h3 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin:12px 0 6px">Get Started with AI Service</h3><p style="color:var(--text-muted);font-size:14px">Start building intelligent solutions in minutes.</p></div>
+        <div class="form-group"><label>Email Address</label><input type="email" placeholder="you@company.com"></div>
+        <div class="form-group"><label>Password</label><input type="password" placeholder="Create a strong password"></div>
+        <div class="form-group"><label>Company Name</label><input type="text" placeholder="Your company name"></div>
+        <div class="form-group"><label>Industry</label><select><option value="">Select your industry</option><option>Fintech</option><option>Healthcare</option><option>E-commerce</option><option>Logistics</option><option>SaaS</option><option>Other</option></select></div>
+        <button class="form-submit" onclick="showToast('Account created! Welcome to NexaMind AI 🚀')">Create Free Account</button>
+        <p style="text-align:center;font-size:13px;color:var(--text-muted);margin-top:14px">Already have an account? <span onclick="showToast('Login coming soon!')" style="color:var(--orange);cursor:none;font-weight:600">Sign in →</span></p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer" style="margin-top:40px"><div class="footer-top"><div class="footer-brand"><div class="footer-logo"><span class="logo-dot"></span>NexaMind AI</div><p>A Bangalore-based AI company delivering impactful, technology-driven automation solutions across India and globally.</p><div class="fci-row"><span class="fci">📍</span> Bangalore, India</div><div class="fci-row"><span class="fci">✉️</span> hello@nexamind.ai</div><div class="fci-row"><span class="fci">📞</span> +91 98765 43210, +91 96938 56529</div></div><div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#" onclick="showPage('home')">Home</a></li><li><a href="#" onclick="showPage('solutions')">Solutions</a></li><li><a href="#" onclick="showPage('services')">Services</a></li><li><a href="#" onclick="showPage('about')">About Us</a></li><li><a href="#" onclick="showPage('blog')">Blog</a></li><li><a href="#" onclick="showPage('contact')">Contact</a></li></ul></div><div class="footer-col"><h4>About</h4><ul><li><a href="#" onclick="showPage('about')">Our Company</a></li><li><a href="#" onclick="showPage('about')">Leadership Team</a></li><li><a href="#">Our Partners</a></li><li><a href="#">Case Studies</a></li><li><a href="#" onclick="showPage('contact')">Careers</a></li></ul></div><div class="footer-col"><h4>Services</h4><ul><li><a href="#">AI Chatbot</a></li><li><a href="#">Lead Generation</a></li><li><a href="#">Cold Email Automation</a></li><li><a href="#">SaaS platform</a></li><li><a href="#">Computer Vision</a></li><li><a href="#">HR Flows</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 NexaMind AI. All Rights Reserved.</p><div class="footer-badge">Proudly Made in India 🇮🇳</div></div></footer>
+</div>
+
+<script>
+// CURSOR
+const cursor = document.getElementById('cursor');
+const trail = document.getElementById('cursorTrail');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+  setTimeout(() => { trail.style.left = e.clientX + 'px'; trail.style.top = e.clientY + 'px'; }, 80);
+});
+
+// PARTICLES
+function spawnParticle() {
+  const p = document.createElement('div'); p.className = 'particle';
+  p.style.left = Math.random() * 100 + 'vw'; p.style.top = '-10px';
+  p.style.animationDuration = (8 + Math.random() * 12) + 's';
+  p.style.animationDelay = (Math.random() * 4) + 's';
+  p.style.width = p.style.height = (1 + Math.random() * 3) + 'px';
+  document.body.appendChild(p); setTimeout(() => p.remove(), 20000);
+}
+setInterval(spawnParticle, 1200);
+
+// PAGE NAV
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.toggle('active', l.dataset.page === id));
+  window.scrollTo(0,0); setTimeout(observeReveal, 100); return false;
+}
+
+// REVEAL
+function observeReveal() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => obs.observe(el));
+}
+observeReveal();
+
+// NAV SCROLL
+window.addEventListener('scroll', () => document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40));
+
+// COUNTERS
+function animateCounters() {
+  document.querySelectorAll('[data-target]').forEach(el => {
+    const target = +el.dataset.target; let current = 0; const step = target / 60;
+    const timer = setInterval(() => { current = Math.min(current + step, target); el.textContent = Math.floor(current); if (current >= target) clearInterval(timer); }, 20);
+  });
+}
+setTimeout(animateCounters, 500);
+
+// SOLUTIONS TOGGLE
+function toggleSol(idx) {
+  const el = document.getElementById('sol-' + idx);
+  const isOpen = el.style.display !== 'none';
+  el.style.display = isOpen ? 'none' : 'block';
+  const btn = document.querySelector(`[data-sol="${idx}"] .learn-more-btn`);
+  btn.innerHTML = isOpen
+    ? `Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`
+    : `Collapse <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M19 12l-7-7-7 7"/></svg>`;
+}
+
+// BLOG TOGGLE
+function toggleBlog(id) {
+  const content = document.getElementById('blog-expand-' + id);
+  const item = document.querySelector(`[data-blog="${id}"]`);
+  const label = document.getElementById('blog-read-' + id);
+  const isOpen = content.style.display === 'block';
+
+  document.querySelectorAll('.blog-expand').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('[data-blog]').forEach(el => el.classList.remove('open'));
+  document.querySelectorAll('[id^="blog-read-"]').forEach(el => el.textContent = el.dataset.default || 'Read article →');
+
+  if (!isOpen) {
+    content.style.display = 'block';
+    item.classList.add('open');
+    label.textContent = 'Collapse article ↑';
+  }
+}
+
+// TAB SWITCH
+function switchTab(panelId, tabId) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.ctab').forEach(t => t.classList.remove('active'));
+  document.getElementById(panelId).classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+}
+
+// CONTACT FORM
+function submitContactForm() {
+  const name = document.getElementById('cm-name').value;
+  const email = document.getElementById('cm-email').value;
+  const service = document.getElementById('cm-service').value;
+  if (!name || !email || !service) { showToast('⚠️ Please fill in all required fields.'); return; }
+  document.getElementById('contactMsgForm').innerHTML = `<div class="form-success"><span class="success-icon">🎉</span><h3>Message Sent!</h3><p>Thanks <strong>${name}</strong>! We'll reach out at <strong>${email}</strong> within 24 hours about <strong>${service}</strong>.</p></div>`;
+}
+
+// TOAST
+function showToast(msg) {
+  const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// PREVENT DEFAULT LINKS
+document.querySelectorAll('a').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+
+// BUTTON PARTICLE BURST
+document.querySelectorAll('.btn-primary, .nav-cta, .form-submit').forEach(btn => {
+  btn.addEventListener('mouseenter', () => {
+    for (let i = 0; i < 6; i++) {
+      const p = document.createElement('div'); p.className = 'particle';
+      const r = btn.getBoundingClientRect();
+      p.style.left = (r.left + Math.random() * r.width) + 'px'; p.style.top = r.top + 'px';
+      p.style.animationDuration = (0.8 + Math.random()) + 's'; p.style.animationDelay = '0s';
+      p.style.width = p.style.height = '3px'; document.body.appendChild(p);
+      setTimeout(() => p.remove(), 2000);
+    }
+  });
+});
+</script>
+</body>
+</html>
