@@ -4,17 +4,39 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NexaMind AI — Revolutionize Your Workflow</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barriecito&family=Betania+Patmos&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+NZ+Basic:wght@100..400&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --orange: #FF5722; --orange-light: #FF7043; --orange-deep: #E64A19;
-    --dark: #0A0A0A; --dark2: #111111; --dark3: #1A1A1A; --dark4: #222222;
-    --text-muted: rgba(255,255,255,0.5); --text-dim: rgba(255,255,255,0.7);
-    --border: rgba(255,255,255,0.08);
-  }
+
+  /* Primary Brand (Enterprise Orange) */
+  --orange: #FF3621;
+  --orange-light: #f37c67;
+  --orange-deep: #eb3622;
+
+  /* Background Layers (Soft Charcoal System) */
+  --dark: #ffffff;
+  --dark2: #161B22;
+  --dark3: #1F2630;
+  --dark4: #2A313C;
+
+  /* Text Hierarchy */
+  --text-main: #110c0c;
+  --text-dim: rgba(13, 11, 11, 0.75);
+  --text-muted: rgba(121, 119, 119, 0.55);
+  --text-subtle: rgba(141, 135, 135, 0.35);
+
+  /* Borders & Dividers */
+  --border: rgba(255, 253, 253, 0);
+  --border-strong: rgba(5, 5, 5, 0);
+
+  /* Accent Surfaces */
+  --surface-glass: rgba(255,255,255,0.03);
+  --surface-hover: rgba(255,255,255,0.06);
+
+}
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--dark); color: #fff; cursor: none; overflow-x: hidden; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--dark); color: #df9999; cursor: none; overflow-x: hidden; }
 
   /* CURSOR */
   .cursor { width:12px; height:12px; background:var(--orange); border-radius:50%; position:fixed; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width 0.3s,height 0.3s; }
@@ -27,14 +49,18 @@
   /* NAV */
   nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:20px 60px; background:rgba(10,10,10,0.9); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); transition:padding 0.3s; }
   nav.scrolled { padding:14px 60px; }
-  .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:22px; color:#fff; text-decoration:none; display:flex; align-items:center; gap:8px; cursor:none; }
+  .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:26px; color:#fff; text-decoration:none; display:flex; align-items:center; gap:8px; cursor:none; }
   .logo-dot { width:10px; height:10px; background:var(--orange); border-radius:50%; display:inline-block; }
-  .nav-links { display:flex; gap:32px; list-style:none; }
-  .nav-links a { color:var(--text-dim); text-decoration:none; font-size:14px; font-weight:500; transition:color 0.2s; cursor:none; }
+  .nav-links { display:flex; gap:42px; list-style:none;}
+  .nav-links a { color:var(--text-dim); text-decoration:none; color: white;font-size:18px; font-weight:500; transition:color 0.2s; cursor:none; }
   .nav-links a:hover { color:#fff; }
   .nav-links a.active { color:var(--orange); }
-  .nav-cta { background:var(--orange); color:#fff; border:none; padding:10px 24px; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; cursor:none; transition:background 0.2s,transform 0.2s; }
-  .nav-cta:hover { background:var(--orange-light); transform:translateY(-1px); }
+  .nav-cta { background:var(--orange); color:#fff; border:none; padding:10px 24px; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:18px; font-weight:600; cursor:none; transition:background 0.2s,transform 0.2s; }
+  .nav-cta:hover { background:var(--orange-light); transform:translateY(-1px); 
+  }
+  
+  
+
 
   /* PAGES */
   .page { display:none; min-height:100vh; padding-top:80px; }
@@ -61,7 +87,7 @@
   .orb-2 { width:300px; height:300px; background:rgba(255,120,60,0.1); bottom:0; left:-50px; animation-delay:-3s; }
   .orb-3 { width:200px; height:200px; background:rgba(255,87,34,0.08); top:40%; left:20%; animation-delay:-5s; }
   .hero-content { position:relative; z-index:2; max-width:860px; }
-  .hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(255,87,34,0.15); border:1px solid rgba(255,87,34,0.3); color:var(--orange-light); padding:6px 16px; border-radius:100px; font-size:13px; font-weight:500; margin-bottom:32px; animation:fadeInDown 0.8s ease both; }
+  .hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(255,87,34,0.15); border:1px solid rgba(255,87,34,0.3); color:var(--orange-light); padding:6px 16px; border-radius:100px; font-size:15px; font-weight:500; margin-bottom:32px; animation:fadeInDown 0.8s ease both; }
   .badge-dot { width:6px; height:6px; background:var(--orange); border-radius:50%; animation:blink 2s ease-in-out infinite; }
   .hero h1 { font-family:'Syne',sans-serif; font-size:clamp(42px,6vw,76px); font-weight:800; line-height:1.04; letter-spacing:-0.02em; margin-bottom:24px; animation:fadeInUp 0.8s 0.2s ease both; }
   .hero h1 .highlight { background:linear-gradient(135deg,var(--orange),var(--orange-light),#FFB74D); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
@@ -73,16 +99,17 @@
   .btn-primary::after { content:''; position:absolute; inset:0; background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.2) 50%,transparent 70%); transform:translateX(-100%); transition:transform 0.5s; }
   .btn-primary:hover { background:var(--orange-light); transform:translateY(-2px); box-shadow:0 20px 40px rgba(255,87,34,0.4); }
   .btn-primary:hover::after { transform:translateX(100%); }
-  .btn-secondary { background:transparent; color:#fff; border:1px solid var(--border); padding:16px 36px; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:16px; font-weight:500; cursor:none; transition:all 0.3s; }
+  .btn-secondary { background:transparent; color:#ee3333; border:1px solid var(--border); padding:16px 36px; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:16px; font-weight:500; cursor:none; transition:all 0.3s; }
   .btn-secondary:hover { border-color:rgba(255,87,34,0.5); color:var(--orange-light); transform:translateY(-2px); }
 
   /* STATS */
   .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
-  .stat { background:var(--dark); padding:40px 20px; text-align:center; transition:background 0.3s; }
-  .stat:hover { background:var(--dark2); }
-  .stat-num { font-family:'Syne',sans-serif; font-size:46px; font-weight:800; color:var(--orange); display:block; }
+  .stat { background:var(--dark2); padding:40px 20px; text-align:center;  }
+  .stat-num { font-family:'Syne',sans-serif; font-size:46px; font-weight:800; color:var(--orange); display:inline-block; }
   .stat-suf { font-family:'Syne',sans-serif; font-size:36px; font-weight:800; color:var(--orange); }
   .stat-label { font-size:13px; color:var(--text-muted); margin-top:6px; }
+
+  
 
   /* SECTIONS */
   .section { padding:100px 60px; }
@@ -99,7 +126,7 @@
   .feature-icon { width:50px; height:50px; background:rgba(255,87,34,0.1); border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:24px; font-size:22px; transition:background 0.3s,transform 0.3s; }
   .feature-card:hover .feature-icon { background:rgba(255,87,34,0.2); transform:scale(1.1); }
   .feature-card h3 { font-family:'Syne',sans-serif; font-size:20px; font-weight:700; margin-bottom:12px; }
-  .feature-card p { font-size:14px; color:var(--text-muted); line-height:1.7; }
+  .feature-card p { font-size:16px; color:white; line-height:1.7; }
 
   /* HOME SOLUTIONS */
   .home-sols { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:24px; }
@@ -109,7 +136,7 @@
   .home-sol-card:hover::before { opacity:1; }
   .hs-icon { width:52px; height:52px; background:rgba(255,87,34,0.1); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:22px; }
   .home-sol-card h3 { font-family:'Syne',sans-serif; font-size:20px; font-weight:700; margin-bottom:10px; }
-  .home-sol-card p { font-size:14px; color:var(--text-muted); line-height:1.7; }
+  .home-sol-card p { font-size:16px; color:white; line-height:1.7; }
 
   /* PROCESS */
   .process-steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:30px; counter-reset:step; }
@@ -118,27 +145,27 @@
   .ps-inner { position:relative; z-index:1; padding:30px; background:var(--dark3); border:1px solid var(--border); border-radius:16px; }
   .ps-num { width:36px; height:36px; background:var(--orange); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; margin-bottom:18px; }
   .ps-inner h3 { font-family:'Syne',sans-serif; font-size:18px; font-weight:700; margin-bottom:10px; }
-  .ps-inner p { font-size:14px; color:var(--text-muted); line-height:1.7; }
+  .ps-inner p { font-size:16px; color:white; line-height:1.7; }
 
   /* TESTIMONIALS */
   .testimonials-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; }
   .testi-card { background:var(--dark3); border:1px solid var(--border); border-radius:16px; padding:32px; transition:border-color 0.3s; }
   .testi-card:hover { border-color:rgba(255,87,34,0.25); }
   .testi-stars { color:var(--orange); font-size:16px; margin-bottom:16px; letter-spacing:2px; }
-  .testi-text { font-size:15px; color:var(--text-dim); line-height:1.8; margin-bottom:24px; font-style:italic; }
+  .testi-text { font-size:18px; color:white; line-height:1.8; margin-bottom:24px; font-style:italic; }
   .testi-author { display:flex; align-items:center; gap:12px; }
   .testi-avatar { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,var(--orange),var(--orange-light)); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:16px; flex-shrink:0; }
-  .testi-name { font-weight:600; font-size:15px; }
-  .testi-role { font-size:12px; color:var(--text-muted); }
+  .testi-name { font-weight:600; font-size:18px; }
+  .testi-role { font-size:15px; color:var(--text-muted); }
 
   /* BLOG */
   .blog-wrap { padding:0 60px 60px; max-width:1240px; margin:0 auto; }
   .blog-featured { display:grid; grid-template-columns:1.3fr 1fr; gap:24px; margin-bottom:24px; }
-  .blog-feature-card { background:linear-gradient(140deg,rgba(255,87,34,0.2),rgba(255,87,34,0.06)); border:1px solid rgba(255,87,34,0.35); border-radius:20px; padding:40px; min-height:320px; display:flex; flex-direction:column; justify-content:space-between; }
+  .blog-feature-card { background:linear-gradient(140deg,rgba(212, 206, 204, 0.2),rgba(255,87,34,0.06)); border:1px solid rgba(255,87,34,0.35); border-radius:20px; padding:40px; min-height:320px; display:flex; flex-direction:column; justify-content:space-between; }
   .blog-feature-card, .blog-small-card, .blog-card { cursor:none; }
   .blog-meta { font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--orange-light); margin-bottom:14px; display:block; }
   .blog-feature-card h2 { font-family:'Syne',sans-serif; font-size:clamp(28px,3.2vw,42px); line-height:1.1; margin-bottom:14px; }
-  .blog-feature-card p { color:var(--text-dim); font-size:15px; line-height:1.8; }
+  .blog-feature-card p { color:var(--border); font-size:18px; line-height:1.8; }
   .blog-small-card { background:var(--dark3); border:1px solid var(--border); border-radius:20px; padding:30px; transition:all 0.3s; }
   .blog-small-card:hover { border-color:rgba(255,87,34,0.35); transform:translateY(-4px); }
   .blog-small-card h3 { font-family:'Syne',sans-serif; font-size:24px; margin-bottom:12px; }
@@ -147,16 +174,24 @@
   .blog-card { background:var(--dark3); border:1px solid var(--border); border-radius:16px; padding:26px; transition:all 0.3s; }
   .blog-card:hover { border-color:rgba(255,87,34,0.3); transform:translateY(-4px); }
   .blog-card h3 { font-family:'Syne',sans-serif; font-size:20px; margin-bottom:10px; }
-  .blog-card p { color:var(--text-muted); font-size:14px; line-height:1.7; margin-bottom:16px; }
+  .blog-card p { color:var(--border); font-size:16px; line-height:1.7; margin-bottom:16px; }
   .blog-read { color:var(--orange); font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; }
-  .blog-expand { margin-top:18px; padding-top:16px; border-top:1px solid var(--border); font-size:14px; color:var(--text-dim); line-height:1.75; display:none; animation:expandIn 0.25s ease; }
-  .blog-feature-card.open, .blog-small-card.open, .blog-card.open { border-color:rgba(255,87,34,0.45); box-shadow:0 24px 50px rgba(0,0,0,0.35); }
 
   /* INDUSTRIES */
   .industries-wrap { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px; }
-  .industry-pill { background:var(--dark3); border:1px solid var(--border); border-radius:12px; padding:18px 20px; text-align:center; font-size:14px; font-weight:500; transition:all 0.3s; cursor:none; }
+  .industry-pill { background:var(--dark3); border:1px solid var(--border); border-radius:12px; padding:18px 20px; text-align:center; font-size:14px; font-weight:500; transition:all 0.3s; cursor:none; position:relative}
   .industry-pill:hover { border-color:var(--orange); color:var(--orange); transform:translateY(-2px); }
   .industry-pill .ind-icon { font-size:28px; display:block; margin-bottom:8px; }
+  .industry-pill:not(:last-child)::after {content:"";position:absolute;  right:-20px;          /* distance between pills */ 
+  top:50%;
+  transform:translateY(-50%);
+  width:19px;
+  height:5px;
+background:linear-gradient(
+  to right,
+  rgba(7, 7, 7, 0.25),
+  rgba(4, 4, 4, 0.05)
+);}
 
   /* CTA BAND */
   .cta-band { background:linear-gradient(135deg,rgba(255,87,34,0.15),rgba(255,87,34,0.05)); border-top:1px solid rgba(255,87,34,0.2); border-bottom:1px solid rgba(255,87,34,0.2); padding:80px 60px; text-align:center; }
@@ -168,7 +203,7 @@
   .page-header { text-align:center; padding:80px 40px 60px; position:relative; }
   .page-header::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:60px; height:3px; background:var(--orange); border-radius:2px; }
   .page-header h1 { font-family:'Syne',sans-serif; font-size:clamp(32px,5vw,58px); font-weight:800; letter-spacing:-0.02em; }
-  .page-header p { color:var(--text-dim); font-size:18px; margin-top:14px; }
+  .page-header p { color:ar(--text-dim)v; font-size:18px; margin-top:14px; }
 
   /* SOLUTIONS */
   .solutions-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:24px; padding:60px; }
@@ -178,10 +213,9 @@
   .solution-card:hover::before { opacity:1; }
   .sol-icon { width:52px; height:52px; background:rgba(255,87,34,0.1); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:24px; }
   .solution-card h3 { font-family:'Syne',sans-serif; font-size:22px; font-weight:700; margin-bottom:12px; }
-  .solution-card p { font-size:14px; color:var(--text-muted); line-height:1.7; margin-bottom:20px; }
+  .solution-card p { font-size:16px; color:white; line-height:1.7; margin-bottom:20px; }
   .learn-more-btn { background:none; border:none; color:var(--orange); font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; cursor:none; padding:0; display:flex; align-items:center; gap:6px; transition:gap 0.2s; }
   .learn-more-btn:hover { gap:10px; }
-  .sol-expanded { margin-top:20px; padding-top:20px; border-top:1px solid var(--border); font-size:14px; color:var(--text-dim); line-height:1.7; animation:expandIn 0.3s ease; }
 
   /* SERVICES */
   .services-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px; padding:60px; }
@@ -197,14 +231,32 @@
   /* ABOUT */
   .about-content { padding:60px; max-width:1000px; margin:0 auto; }
   .about-text { font-size:17px; color:var(--text-dim); line-height:1.9; margin-bottom:20px; }
-  .about-highlight { background:rgba(255,87,34,0.08); border-left:3px solid var(--orange); padding:24px 30px; border-radius:0 12px 12px 0; margin:40px 0; font-size:18px; color:#fff; font-style:italic; }
-  .team-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; margin-top:60px; }
-  .team-card { background:var(--dark3); border:1px solid var(--border); border-radius:16px; padding:32px; transition:all 0.3s; cursor:none; }
+  .about-highlight { background:rgba(255,87,34,0.08); border-left:3px solid var(--orange); padding:24px 30px; border-radius:0 12px 12px 0; margin:40px 0; font-size:18px; color:#0a0a0a; font-style:italic; }
+.team-grid {
+  display:grid;
+  grid-template-columns:repeat(3, 1fr); /* or however many cards you have */
+  gap:44px;
+  margin-top:60px;
+} 
+ .team-card { background:var(--dark3); border:1px solid var(--border); border-radius:16px; padding:32px; transition:all 0.3s; cursor:none; }
   .team-card:hover { border-color:rgba(255,87,34,0.3); transform:translateY(-4px); }
-  .team-avatar { width:60px; height:60px; background:rgba(255,87,34,0.1); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:26px; margin-bottom:20px; }
-  .team-card h3 { font-family:'Syne',sans-serif; font-size:20px; font-weight:700; margin-bottom:4px; }
+.team-avatar {
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  overflow:hidden;
+  margin:0 auto 20px auto;
+}
+
+.team-avatar img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  border-radius: 50%;
+}  .team-card h3 { font-family:'Syne',sans-serif; font-size:22px; font-weight:700; margin-bottom:4px; }
   .team-role { font-size:13px; color:var(--orange); font-weight:600; margin-bottom:14px; }
-  .team-card p { font-size:14px; color:var(--text-muted); line-height:1.7; }
+  .team-card p { font-size:16px; color:white; line-height:1.7; }
 
   /* CONTACT PAGE */
   .contact-gs-wrapper { display:grid; grid-template-columns:1fr 1fr; gap:50px; padding:60px; max-width:1200px; margin:0 auto; align-items:start; }
@@ -255,7 +307,7 @@
   .toast.show { transform:translateY(0); opacity:1; }
 
   /* ===== FOOTER ===== */
-  .site-footer { background:#0D0D0D; border-top:1px solid var(--border); padding:70px 60px 0; }
+  .site-footer { background:var(--dark2); border-top:1px solid var(--border); padding:70px 60px 0; }
   .footer-top { display:grid; grid-template-columns:2fr 1fr 1fr 1.2fr; gap:50px; padding-bottom:50px; }
   .footer-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:22px; display:flex; align-items:center; gap:8px; margin-bottom:16px; }
   .footer-brand > p { font-size:14px; color:var(--text-muted); line-height:1.8; max-width:300px; margin-bottom:24px; }
@@ -284,93 +336,93 @@
 
 
 
+/* ===== MOBILE DRAWER NAV ===== */
 
-
-  /* ===== MOBILE FIXES ===== */
-
-html, body {
-  max-width: 100%;
-  overflow-x: hidden;
+.menu-toggle {
+  font-size: 26px;
+  cursor: pointer;
+  display: none;
 }
 
-img, svg {
-  max-width: 100%;
-  height: auto;
+.mobile-cta {
+  display: none;
+  margin-right: 10px;
 }
 
-.section,
-.solutions-grid,
-.services-grid,
-.contact-gs-wrapper,
-.about-content,
-.cta-band,
-.site-footer {
-  width: 100%;
-  max-width: 100%;
+.desktop-cta {
+  display: inline-block;
 }
 
-/* Fix Large Padding On Mobile */
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: -280px;
+  width: 260px;
+  height: 100vh;
+  background: var(--dark2);
+  border-left: 1px solid var(--border);
+  padding: 20px;
+  transition: right 0.3s ease;
+  z-index: 999;
+}
+
+.mobile-drawer.active {
+  right: 0;
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+.drawer-header button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.drawer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.drawer-links a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.drawer-links a:hover {
+  color: var(--orange);
+}
+
+/* MOBILE ONLY */
 @media (max-width: 768px) {
 
-  nav {
-    padding: 14px 18px !important;
+  .nav-links {
+    display: none !important;
   }
 
-  .hero {
-    padding: 40px 20px !important;
-  }
-
-  .section {
-    padding: 60px 20px !important;
-  }
-
-  .solutions-grid,
-  .services-grid,
-  .contact-gs-wrapper,
-  .about-content {
-    padding: 40px 20px !important;
-  }
-
-  .cta-band {
-    padding: 60px 20px !important;
-  }
-
-  .site-footer {
-    padding: 50px 20px 0 !important;
-  }
-
-  /* Stack grids properly */
-  .stats {
-    grid-template-columns: 1fr 1fr !important;
-  }
-
-  .blog-featured {
-    grid-template-columns: 1fr !important;
-  }
-
-  .contact-gs-wrapper {
-    grid-template-columns: 1fr !important;
-  }
-
-  .footer-top {
-    grid-template-columns: 1fr !important;
-  }
-
-  /* Fix hero text overflow */
-  .hero h1 {
-    font-size: 32px !important;
-  }
-
-  .hero p {
-    font-size: 15px !important;
-  }
-
-  /* Disable huge floating orbs */
-  .orb {
+  .desktop-cta {
     display: none;
   }
 
+  .mobile-cta {
+    display: inline-block;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
 }
+
 </style>
 </head>
 <body>
@@ -381,16 +433,52 @@ img, svg {
 
 <!-- NAV -->
 <nav id="navbar">
-  <a href="#" class="nav-logo" onclick="showPage('home')"><span class="logo-dot"></span>NexaMind AI</a>
+  
+  <!-- Logo -->
+  <a href="#" class="nav-logo" onclick="showPage('home')">
+    <span class="logo-dot"></span>NexaMind AI
+  </a>
+
+  <!-- Desktop Links -->
   <ul class="nav-links">
     <li><a href="#" onclick="showPage('home')" class="nav-link active" data-page="home">Home</a></li>
     <li><a href="#" onclick="showPage('solutions')" class="nav-link" data-page="solutions">Solutions</a></li>
-    <!-- <li><a href="#" onclick="showPage('services')" class="nav-link" data-page="services">Services</a></li> -->
     <li><a href="#" onclick="showPage('about')" class="nav-link" data-page="about">About Us</a></li>
     <li><a href="#" onclick="showPage('blog')" class="nav-link" data-page="blog">Blog</a></li>
     <li><a href="#" onclick="showPage('contact')" class="nav-link" data-page="contact">Contact</a></li>
   </ul>
-  <button class="nav-cta" onclick="showPage('contact')">Get Started</button>
+
+  <!-- Desktop CTA -->
+  <button class="nav-cta desktop-cta" onclick="showPage('contact')">
+    Get Started
+  </button>
+
+  <!-- Mobile CTA -->
+  <button class="nav-cta mobile-cta" onclick="showPage('contact')">
+    Get Started
+  </button>
+
+  <!-- Hamburger -->
+  <div class="menu-toggle" onclick="openDrawer()">
+    ☰
+  </div>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobileDrawer">
+    <div class="drawer-header">
+      <span>Menu</span>
+      <button onclick="closeDrawer()">✕</button>
+    </div>
+
+    <ul class="drawer-links">
+      <li><a href="#" onclick="handleNav('home')">Home</a></li>
+      <li><a href="#" onclick="handleNav('solutions')">Solutions</a></li>
+      <li><a href="#" onclick="handleNav('about')">About Us</a></li>
+      <li><a href="#" onclick="handleNav('blog')">Blog</a></li>
+      <li><a href="#" onclick="handleNav('contact')">Contact</a></li>
+    </ul>
+  </div>
+
 </nav>
 
 <!-- ======================== HOME ======================== -->
@@ -400,7 +488,7 @@ img, svg {
     <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
     <div class="hero-content">
       <div class="hero-badge"><span class="badge-dot"></span> New: GPT-5 Integration Now Live</div>
-      <h1>Revolutionize Your Workflow<br>with <span class="highlight">AI Automation</span></h1>
+      <h1>Revolutionize with <span class="highlight">AI Automation</span></h1>
       <p>The all-in-one AI platform for startups and enterprises to deploy intelligent agents, automate workflows, and scale smarter — in seconds.</p>
       <div class="hero-buttons">
         <button class="btn-primary" onclick="showPage('contact')">Get Started for Free</button>
@@ -439,7 +527,7 @@ img, svg {
       <div class="home-sol-card reveal"><div class="hs-icon">🎯</div><h3>Lead Generation</h3><p>Identify, score, and nurture high-quality leads automatically using AI that understands buyer intent.</p></div>
       <div class="home-sol-card reveal"><div class="hs-icon">📧</div><h3>Cold Email Automation</h3><p>Hyper-personalized outreach sequences that achieve 3–5× higher open rates and 2× more booked meetings.</p></div>
       <div class="home-sol-card reveal"><div class="hs-icon">📞</div><h3>Saas platform</h3><p>AI voice agents that qualify leads, handle objections, and schedule meetings across hundreds of simultaneous calls.</p></div>
-      <div class="home-sol-card reveal"><div class="hs-icon">👥</div><h3>HR Flows</h3><p>Automate candidate screening, onboarding workflows, and employee Q&A — reduce HR overhead by 70%.</p></div>
+      <!-- <div class="home-sol-card reveal"><div class="hs-icon">👥</div><h3>HR Flows</h3><p>Automate candidate screening, onboarding workflows, and employee Q&A — reduce HR overhead by 70%.</p></div> -->
       <!-- <div class="home-sol-card reveal"><div class="hs-icon">👁️</div><h3>Computer Vision</h3><p>Object detection, quality inspection, and visual intelligence for retail, manufacturing, and security.</p></div> -->
     </div>
     <div style="text-align:center;margin-top:40px"><button class="btn-primary" onclick="showPage('solutions')">View All Solutions →</button></div>
@@ -468,9 +556,9 @@ img, svg {
       <div class="industry-pill reveal"><span class="ind-icon">🚚</span>Logistics</div>
       <div class="industry-pill reveal"><span class="ind-icon">🏭</span>Manufacturing</div>
       <div class="industry-pill reveal"><span class="ind-icon">🎓</span>Education</div>
-      <div class="industry-pill reveal"><span class="ind-icon">🏨</span>Hospitality</div>
+      <!-- <div class="industry-pill reveal"><span class="ind-icon">🏨</span>Hospitality</div>
       <div class="industry-pill reveal"><span class="ind-icon">📱</span>SaaS</div>
-      <div class="industry-pill reveal"><span class="ind-icon">🏗️</span>Real Estate</div>
+      <div class="industry-pill reveal"><span class="ind-icon">🏗️</span>Real Estate</div> -->
       <!-- <div class="industry-pill reveal"><span class="ind-icon">⚖️</span>Legal</div> -->
     </div>
   </section>
@@ -518,12 +606,11 @@ img, svg {
 <div class="page" id="page-solutions">
   <div class="page-header"><span class="section-label">What We Build</span><h1>Tailored AI Solutions</h1><p>We help businesses automate complex tasks using cutting-edge Neural Networks.</p></div>
   <div class="solutions-grid">
-    <div class="solution-card reveal" data-sol="0"><div class="sol-icon">💬</div><h3>AI Chat-Bot</h3><p>Intelligent conversational agents for customer support, lead qualification, and automation — trained on your data.</p><button class="learn-more-btn" onclick="toggleSol(0)">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button><div class="sol-expanded" id="sol-0" style="display:none">Our AI chatbot platform leverages state-of-the-art NLP to provide human-like responses and manage complex customer queries 24/7 without human intervention, drastically reducing operational costs while improving satisfaction by up to 60%.</div></div>
-    <div class="solution-card reveal" data-sol="1"><div class="sol-icon">👥</div><h3>HR Flows</h3><p>Automate candidate screening, onboarding, and policy Q&A with AI that understands context and intent.</p><button class="learn-more-btn" onclick="toggleSol(1)">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button><div class="sol-expanded" id="sol-1" style="display:none">Automate your HR processes from candidate screening and onboarding to performance tracking with AI that understands tone and intent. Reduce HR overhead by up to 70% while improving employee experience significantly.</div></div>
-    <div class="solution-card reveal" data-sol="2"><div class="sol-icon">🎯</div><h3>Lead Generation</h3><p>AI that identifies, scores, and nurtures high-quality leads using behavioral signals and intent data.</p><button class="learn-more-btn" onclick="toggleSol(2)">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button><div class="sol-expanded" id="sol-2" style="display:none">Our AI lead generation engine analyzes behavioral signals, firmographic data, and intent markers to deliver conversion-ready leads. Integrates seamlessly with CRM platforms and adapts to your ideal customer profile over time.</div></div>
-    <div class="solution-card reveal" data-sol="3"><div class="sol-icon">📧</div><h3>Cold Email Automation</h3><p>AI-crafted, personalized outreach that achieves 3–5× higher open rates and 2× more booked meetings.</p><button class="learn-more-btn" onclick="toggleSol(3)">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button><div class="sol-expanded" id="sol-3" style="display:none">Craft hyper-personalized cold emails at scale using AI that researches each prospect, writes compelling copy, optimizes send timing, and tracks replies — all fully automated and continuously improving.</div></div>
-    <div class="solution-card reveal" data-sol="4"><div class="sol-icon">📞</div><h3>SaaS platform</h3><p>AI voice agents that qualify leads, schedule meetings, and handle inbound calls 24/7 at massive scale.</p><button class="learn-more-btn" onclick="toggleSol(4)">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button><div class="sol-expanded" id="sol-4" style="display:none">Deploy AI voice agents that sound and respond like trained sales reps. Handle hundreds of simultaneous calls, qualify prospects using your scripts, and auto-schedule meetings directly into your calendar with zero downtime.</div></div>
-    <!-- <div class="solution-card reveal" data-sol="5"><div class="sol-icon">👁️</div><h3>Computer Vision</h3><p>Object detection and image recognition for security, retail, manufacturing, and healthcare applications.</p><button class="learn-more-btn" onclick="toggleSol(5)">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button><div class="sol-expanded" id="sol-5" style="display:none">Object detection enables computers to interpret visual data like humans. Key applications include autonomous navigation, security surveillance, quality control, and medical imaging analysis with real-time processing capabilities.</div></div> -->
+    <div class="solution-card reveal" data-sol="0" onclick="openSolution(0)"><div class="sol-icon">💬</div><h3>AI Chat-Bot</h3><p>Intelligent conversational agents for customer support, lead qualification, and automation — trained on your data.</p><button class="learn-more-btn" onclick="openSolution(0, event)">View Details <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
+    <div class="solution-card reveal" data-sol="1" onclick="openSolution(1)"><div class="sol-icon">👥</div><h3>HR Flows</h3><p>Automate candidate screening, onboarding, and policy Q&A with AI that understands context and intent.</p><button class="learn-more-btn" onclick="openSolution(1, event)">View Details <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
+    <div class="solution-card reveal" data-sol="2" onclick="openSolution(2)"><div class="sol-icon">🎯</div><h3>Lead Generation</h3><p>AI that identifies, scores, and nurtures high-quality leads using behavioral signals and intent data.</p><button class="learn-more-btn" onclick="openSolution(2, event)">View Details <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
+    <div class="solution-card reveal" data-sol="3" onclick="openSolution(3)"><div class="sol-icon">📧</div><h3>Cold Email Automation</h3><p>AI-crafted, personalized outreach that achieves 3–5× higher open rates and 2× more booked meetings.</p><button class="learn-more-btn" onclick="openSolution(3, event)">View Details <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
+    <div class="solution-card reveal" data-sol="4" onclick="openSolution(4)"><div class="sol-icon">📞</div><h3>SaaS platform</h3><p>AI voice agents that qualify leads, schedule meetings, and handle inbound calls 24/7 at massive scale.</p><button class="learn-more-btn" onclick="openSolution(4, event)">View Details <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
   </div>
   <div style="text-align:center;padding:0 60px 60px"><button class="btn-primary" onclick="showPage('contact')">Start Building Your Solution →</button></div>
   <footer class="site-footer"><div class="footer-top"><div class="footer-brand"><div class="footer-logo"><span class="logo-dot"></span>NexaMind AI</div><p>A Bangalore-based AI company delivering impactful, technology-driven automation solutions across India and globally.</p><div class="fci-row"><span class="fci">📍</span> Bangalore, India</div><div class="fci-row"><span class="fci">✉️</span> hello@nexamind.ai</div><div class="fci-row"><span class="fci">📞</span> +91 98765 43210</div></div><div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#" onclick="showPage('home')">Home</a></li><li><a href="#" onclick="showPage('solutions')">Solutions</a></li><li><a href="#" onclick="showPage('services')">Services</a></li><li><a href="#" onclick="showPage('about')">About Us</a></li><li><a href="#" onclick="showPage('blog')">Blog</a></li><li><a href="#" onclick="showPage('contact')">Contact</a></li></ul></div><div class="footer-col"><h4>About</h4><ul><li><a href="#" onclick="showPage('about')">Our Company</a></li><li><a href="#" onclick="showPage('about')">Leadership Team</a></li><li><a href="#">Our Partners</a></li><li><a href="#">Case Studies</a></li><li><a href="#" onclick="showPage('contact')">Careers</a></li></ul></div><div class="footer-col"><h4>Services</h4><ul><li><a href="#">AI Chatbot</a></li><li><a href="#">Lead Generation</a></li><li><a href="#">Cold Email Automation</a></li><li><a href="#">SaaS platform</a></li><li><a href="#">Computer Vision</a></li><li><a href="#">HR Flows</a></li><li><a href="#">Predictive Analytics</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 NexaMind AI. All Rights Reserved.</p><div class="footer-badge">Proudly Made in India 🇮🇳</div></div></footer>
@@ -556,9 +643,9 @@ img, svg {
     <p class="about-text reveal">Our team of 50+ researchers, engineers, and strategists are united by a common belief: that AI should be accessible, ethical, and transformative — not just for tech companies, but for every organization ready to evolve.</p>
     <h2 style="font-family:'Syne',sans-serif;font-size:36px;font-weight:800;margin-top:70px;margin-bottom:0">Leadership Team</h2>
     <div class="team-grid">
-      <div class="team-card reveal"><div class="team-avatar">💼</div><h3>Kuldeep Singh</h3><div class="team-role">Founder & CEO</div><p>Technology entrepreneur with over 3 years of experience in AI-driven products and business strategy. Leads NexaMind AI's vision, partnerships, and global expansion.</p></div>
-      <div class="team-card reveal"><div class="team-avatar">🧠</div><h3>Animesh Singh</h3><div class="team-role">Chief Technology Officer</div><p>Holds a degree in Artificial Intelligence and has led multiple large-scale AI deployments. Oversees product architecture, research, and innovation at NexaMind AI.</p></div>
-      <div class="team-card reveal"><div class="team-avatar">⚙️</div><h3>Maaz Anwar</h3><div class="team-role">Head of AI Engineering</div><p>Specializes in machine learning systems and automation pipelines. Leads the engineering team ensuring scalable, secure, and high-performance AI solutions.</p></div>
+      <div class="team-card reveal"><div class="team-avatar"><img src="./Images/kuldeep.png" alt="team-avatar"></div><h3>Kuldeep Singh</h3><div class="team-role">Founder & CEO</div><p>Technology entrepreneur with over 3 years of experience in AI-driven products and business strategy. Leads NexaMind AI's vision, partnerships, and global expansion.</p></div>
+      <div class="team-card reveal"><div class="team-avatar"><img src="./Images/animesh.jpeg" alt="team-avatar"></div><h3>Animesh Singh</h3><div class="team-role">Chief Technology Officer</div><p>Holds a degree in Artificial Intelligence and has led multiple large-scale AI deployments. Oversees product architecture, research, and innovation at NexaMind AI.</p></div>
+      <div class="team-card reveal"><div class="team-avatar"><img src="./Images/maaz.jpeg" alt="team-avatar"></div><h3>Maaz Anwar</h3><div class="team-role">Head of AI Engineering</div><p>Specializes in machine learning systems and automation pipelines. Leads the engineering team ensuring scalable, secure, and high-performance AI solutions.</p></div>
     </div>
   </div>
   <footer class="site-footer" style="margin-top:60px"><div class="footer-top"><div class="footer-brand"><div class="footer-logo"><span class="logo-dot"></span>NexaMind AI</div><p>A Bangalore-based AI company delivering impactful, technology-driven automation solutions across India and globally.</p><div class="fci-row"><span class="fci">📍</span> Bangalore, India</div><div class="fci-row"><span class="fci">✉️</span> hello@nexamind.ai</div><div class="fci-row"><span class="fci">📞</span> +91 98765 43210</div></div><div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#" onclick="showPage('home')">Home</a></li><li><a href="#" onclick="showPage('solutions')">Solutions</a></li><li><a href="#" onclick="showPage('services')">Services</a></li><li><a href="#" onclick="showPage('about')">About Us</a></li><li><a href="#" onclick="showPage('blog')">Blog</a></li><li><a href="#" onclick="showPage('contact')">Contact</a></li></ul></div><div class="footer-col"><h4>About</h4><ul><li><a href="#" onclick="showPage('about')">Our Company</a></li><li><a href="#" onclick="showPage('about')">Leadership Team</a></li><li><a href="#">Our Partners</a></li><li><a href="#">Case Studies</a></li><li><a href="#" onclick="showPage('contact')">Careers</a></li></ul></div><div class="footer-col"><h4>Services</h4><ul><li><a href="#">AI Chatbot</a></li><li><a href="#">Lead Generation</a></li><li><a href="#">Cold Email Automation</a></li><li><a href="#">SaaS platform</a></li><li><a href="#">Computer Vision</a></li><li><a href="#">HR Flows</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 NexaMind AI. All Rights Reserved.</p><div class="footer-badge">Proudly Made in India 🇮🇳</div></div></footer>
@@ -569,34 +656,208 @@ img, svg {
   <div class="page-header"><span class="section-label">Insights</span><h1>NexaMind AI Blog</h1><p>Practical guides, trends, and playbooks for teams building with AI.</p></div>
   <div class="blog-wrap">
     <div class="blog-featured">
-      <article class="blog-feature-card reveal" data-blog="b0" onclick="toggleBlog('b0')">
+      <article class="blog-feature-card reveal" data-blog="b0" onclick="openBlog('b0')">
         <div>
           <span class="blog-meta">Featured • Automation Strategy</span>
           <h2>How to Deploy AI Agents in 30 Days Without Breaking Existing Workflows</h2>
           <p>A practical rollout framework covering scope, integrations, governance, and team onboarding so your first AI launch drives measurable ROI fast.</p>
         </div>
-        <span class="blog-read" id="blog-read-b0" data-default="Read Featured Story →">Read Featured Story →</span>
-        <div class="blog-expand" id="blog-expand-b0">This guide breaks deployment into four phases: process audit, agent pilot, workflow integration, and optimization loops. You get a launch checklist, baseline metrics to track from day one, and rollout guardrails to avoid process disruption while increasing output quality.</div>
+        <span class="blog-read">Read Featured Story →</span>
       </article>
-      <article class="blog-small-card reveal" data-blog="b1" onclick="toggleBlog('b1')">
+      <article class="blog-small-card reveal" data-blog="b1" onclick="openBlog('b1')">
         <span class="blog-meta">Popular • Lead Gen</span>
         <h3>7 AI outreach sequences that booked 2x more demos</h3>
         <p>What high-performing GTM teams changed in prompts, timing, and follow-up logic to improve conversion rates.</p>
-        <span class="blog-read" id="blog-read-b1" data-default="Read article →">Read article →</span>
-        <div class="blog-expand" id="blog-expand-b1">The top-performing sequences layered account research, pain-specific hooks, and adaptive follow-ups based on reply intent. The article includes tested timing windows, structure templates, and a scoring model to decide when to escalate to sales.</div>
+        <span class="blog-read">Read article →</span>
       </article>
     </div>
     <div class="blog-grid">
-      <article class="blog-card reveal" data-blog="b2" onclick="toggleBlog('b2')"><span class="blog-meta">Product</span><h3>Choosing the right LLM stack for customer support</h3><p>Model routing, fallback logic, and guardrails for stable high-volume support bots.</p><span class="blog-read" id="blog-read-b2" data-default="Read article →">Read article →</span><div class="blog-expand" id="blog-expand-b2">Compare costs per resolved ticket across model tiers, route by ticket complexity, and use confidence thresholds to handoff sensitive or ambiguous cases to humans automatically.</div></article>
-      <article class="blog-card reveal" data-blog="b3" onclick="toggleBlog('b3')"><span class="blog-meta">Operations</span><h3>What to automate first: a 5-step AI prioritization matrix</h3><p>Score internal workflows by impact, complexity, and data readiness before building.</p><span class="blog-read" id="blog-read-b3" data-default="Read article →">Read article →</span><div class="blog-expand" id="blog-expand-b3">The matrix weighs hours saved, risk level, integration effort, and data quality. Use it to select high-impact low-risk workflows first, then sequence advanced automations in later sprints.</div></article>
-      <article class="blog-card reveal" data-blog="b4" onclick="toggleBlog('b4')"><span class="blog-meta">Engineering</span><h3>RAG vs fine-tuning: where each approach actually wins</h3><p>A quick decision guide for teams balancing speed, accuracy, and maintenance overhead.</p><span class="blog-read" id="blog-read-b4" data-default="Read article →">Read article →</span><div class="blog-expand" id="blog-expand-b4">Use RAG when knowledge changes often and observability matters. Fine-tune for fixed behavior, stable format output, or domain-specific style. Hybrid patterns can deliver both freshness and consistency.</div></article>
-      <article class="blog-card reveal" data-blog="b5" onclick="toggleBlog('b5')"><span class="blog-meta">Growth</span><h3>Automating inbound qualification with AI voice agents</h3><p>How to route, score, and book qualified leads in real-time from inbound calls.</p><span class="blog-read" id="blog-read-b5" data-default="Read article →">Read article →</span><div class="blog-expand" id="blog-expand-b5">Build a qualification tree around intent, budget, and urgency. Route qualified callers directly to calendars, send transcript summaries to CRM, and auto-trigger follow-ups for no-show recovery.</div></article>
-      <article class="blog-card reveal" data-blog="b6" onclick="toggleBlog('b6')"><span class="blog-meta">Security</span><h3>Building safe AI workflows with role-based controls</h3><p>Security patterns that protect data while enabling teams to ship automation faster.</p><span class="blog-read" id="blog-read-b6" data-default="Read article →">Read article →</span><div class="blog-expand" id="blog-expand-b6">Define model access by role, isolate sensitive datasets, and enforce action-level permissions for automations. Add trace logs and approval gates for high-impact operations.</div></article>
-      <article class="blog-card reveal" data-blog="b7" onclick="toggleBlog('b7')"><span class="blog-meta">Case Study</span><h3>From manual ops to autonomous pipelines in 8 weeks</h3><p>How one SaaS team reduced repetitive workload by 62% with staged automation.</p><span class="blog-read" id="blog-read-b7" data-default="Read article →">Read article →</span><div class="blog-expand" id="blog-expand-b7">The team started with repetitive onboarding tasks, then expanded into support triage and reporting automation. Weekly QA loops maintained quality while throughput improved each sprint.</div></article>
+      <article class="blog-card reveal" data-blog="b2" onclick="openBlog('b2')"><span class="blog-meta">Product</span><h3>Choosing the right LLM stack for customer support</h3><p>Model routing, fallback logic, and guardrails for stable high-volume support bots.</p><span class="blog-read">Read article →</span></article>
+      <article class="blog-card reveal" data-blog="b3" onclick="openBlog('b3')"><span class="blog-meta">Operations</span><h3>What to automate first: a 5-step AI prioritization matrix</h3><p>Score internal workflows by impact, complexity, and data readiness before building.</p><span class="blog-read">Read article →</span></article>
+      <article class="blog-card reveal" data-blog="b4" onclick="openBlog('b4')"><span class="blog-meta">Engineering</span><h3>RAG vs fine-tuning: where each approach actually wins</h3><p>A quick decision guide for teams balancing speed, accuracy, and maintenance overhead.</p><span class="blog-read">Read article →</span></article>
+      <article class="blog-card reveal" data-blog="b5" onclick="openBlog('b5')"><span class="blog-meta">Growth</span><h3>Automating inbound qualification with AI voice agents</h3><p>How to route, score, and book qualified leads in real-time from inbound calls.</p><span class="blog-read">Read article →</span></article>
+      <article class="blog-card reveal" data-blog="b6" onclick="openBlog('b6')"><span class="blog-meta">Security</span><h3>Building safe AI workflows with role-based controls</h3><p>Security patterns that protect data while enabling teams to ship automation faster.</p><span class="blog-read">Read article →</span></article>
+      <article class="blog-card reveal" data-blog="b7" onclick="openBlog('b7')"><span class="blog-meta">Case Study</span><h3>From manual ops to autonomous pipelines in 8 weeks</h3><p>How one SaaS team reduced repetitive workload by 62% with staged automation.</p><span class="blog-read">Read article →</span></article>
     </div>
   </div>
   <footer class="site-footer" style="margin-top:20px"><div class="footer-top"><div class="footer-brand"><div class="footer-logo"><span class="logo-dot"></span>NexaMind AI</div><p>A Bangalore-based AI company delivering impactful, technology-driven automation solutions across India and globally.</p><div class="fci-row"><span class="fci">📍</span> Bangalore, India</div><div class="fci-row"><span class="fci">✉️</span> hello@nexamind.ai</div><div class="fci-row"><span class="fci">📞</span> +91 98765 43210</div></div><div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#" onclick="showPage('home')">Home</a></li><li><a href="#" onclick="showPage('solutions')">Solutions</a></li><li><a href="#" onclick="showPage('services')">Services</a></li><li><a href="#" onclick="showPage('about')">About Us</a></li><li><a href="#" onclick="showPage('blog')">Blog</a></li><li><a href="#" onclick="showPage('contact')">Contact</a></li></ul></div><div class="footer-col"><h4>About</h4><ul><li><a href="#" onclick="showPage('about')">Our Company</a></li><li><a href="#" onclick="showPage('about')">Leadership Team</a></li><li><a href="#">Our Partners</a></li><li><a href="#">Case Studies</a></li><li><a href="#" onclick="showPage('contact')">Careers</a></li></ul></div><div class="footer-col"><h4>Services</h4><ul><li><a href="#">AI Chatbot</a></li><li><a href="#">Lead Generation</a></li><li><a href="#">Cold Email Automation</a></li><li><a href="#">SaaS platform</a></li><li><a href="#">Computer Vision</a></li><li><a href="#">HR Flows</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 NexaMind AI. All Rights Reserved.</p><div class="footer-badge">Proudly Made in India 🇮🇳</div></div></footer>
 </div>
+
+<div class="page" id="page-blog-b0">
+  <div class="page-header">
+    <span class="section-label">Automation Strategy</span>
+    <h1>How to Deploy AI Agents in 30 Days Without Breaking Existing Workflows</h1>
+    <p>A practical rollout framework covering scope, integrations, governance, and team onboarding.</p>
+  </div>
+  <div class="section" style="max-width:800px;margin:auto;">
+    <p>This guide breaks deployment into four phases: process audit, agent pilot, workflow integration, and optimization loops. Start by selecting one workflow with clear inputs and measurable outcomes so early wins are visible and low risk.</p>
+    <p>During rollout, pair technical implementation with operator playbooks. Define escalation paths, QA checks, and ownership boundaries before moving from pilot to production. This prevents disruption while preserving decision speed and output quality.</p>
+    <button class="nav-cta" onclick="showPage('blog')">← Back to Blog</button>
+  </div>
+</div>
+
+<div class="page" id="page-blog-b1">
+  <div class="page-header">
+    <span class="section-label">Lead Gen</span>
+    <h1>7 AI outreach sequences that booked 2x more demos</h1>
+    <p>What high-performing GTM teams changed in prompts, timing, and follow-up logic.</p>
+  </div>
+  <div class="section" style="max-width:800px;margin:auto;">
+    <p>The top-performing sequences layered account research, pain-specific hooks, and adaptive follow-ups based on reply intent. Personalized openers and value framing consistently outperformed generic templates in both reply and meeting conversion rates.</p>
+    <p>The article includes tested timing windows, structure templates, and a scoring model to decide when to escalate to sales. Teams that aligned AI outreach scoring with CRM stages saw faster handoffs and fewer unqualified meetings.</p>
+    <button class="nav-cta" onclick="showPage('blog')">← Back to Blog</button>
+  </div>
+</div>
+
+<div class="page" id="page-blog-b2">
+  <div class="page-header">
+    <span class="section-label">Product</span>
+    <h1>Choosing the right LLM stack for customer support</h1>
+    <p>Model routing, fallback logic, and guardrails for stable high-volume support bots.</p>
+  </div>
+  <div class="section" style="max-width:800px;margin:auto;">
+    <p>Compare costs per resolved ticket across model tiers, route by ticket complexity, and use confidence thresholds to hand off sensitive or ambiguous cases to humans automatically. This tiered approach improves reliability without overspending on every interaction.</p>
+    <p>Operationally, treat prompt versions, retrieval configs, and routing rules as release-managed assets. Observability on deflection quality, reopen rate, and escalation speed helps keep support quality high as volume grows.</p>
+    <button class="nav-cta" onclick="showPage('blog')">← Back to Blog</button>
+  </div>
+</div>
+
+<div class="page" id="page-blog-b3">
+  <div class="page-header">
+    <span class="section-label">Operations</span>
+    <h1>What to automate first: a 5-step AI prioritization matrix</h1>
+    <p>Score internal workflows by impact, complexity, and data readiness before building.</p>
+  </div>
+  <div class="section" style="max-width:800px;margin:auto;">
+    <p>The matrix weighs hours saved, risk level, integration effort, and data quality. Use it to select high-impact, low-risk workflows first, then sequence advanced automations in later sprints to minimize change fatigue.</p>
+    <p>Teams get best results when each candidate workflow includes an owner, baseline KPI, and success threshold before development starts. This turns prioritization from opinion into an execution roadmap.</p>
+    <button class="nav-cta" onclick="showPage('blog')">← Back to Blog</button>
+  </div>
+</div>
+
+<div class="page" id="page-blog-b4">
+  <div class="page-header">
+    <span class="section-label">Engineering</span>
+    <h1>RAG vs fine-tuning: where each approach actually wins</h1>
+    <p>A quick decision guide for teams balancing speed, accuracy, and maintenance overhead.</p>
+  </div>
+  <div class="section" style="max-width:800px;margin:auto;">
+    <p>Use RAG when knowledge changes often and observability matters. Fine-tune for fixed behavior, stable format output, or domain-specific style where consistency is more important than rapid content updates.</p>
+    <p>Hybrid patterns can deliver both freshness and consistency by combining retrieval for dynamic facts with smaller tuned models for deterministic outputs. The right choice depends on data volatility and response guarantees.</p>
+    <button class="nav-cta" onclick="showPage('blog')">← Back to Blog</button>
+  </div>
+</div>
+
+<div class="page" id="page-blog-b5">
+  <div class="page-header">
+    <span class="section-label">Growth</span>
+    <h1>Automating inbound qualification with AI voice agents</h1>
+    <p>How to route, score, and book qualified leads in real-time from inbound calls.</p>
+  </div>
+  <div class="section" style="max-width:800px;margin:auto;">
+    <p>Build a qualification tree around intent, budget, and urgency. Route qualified callers directly to calendars, send transcript summaries to CRM, and auto-trigger follow-ups for no-show recovery.</p>
+    <p>To improve outcomes, enforce consistent disposition tagging and monitor drop-off moments in conversation paths. These signals help teams refine scripts and increase downstream close rates.</p>
+    <button class="nav-cta" onclick="showPage('blog')">← Back to Blog</button>
+  </div>
+</div>
+
+<div class="page" id="page-blog-b6">
+  <div class="page-header">
+    <span class="section-label">Security</span>
+    <h1>Building safe AI workflows with role-based controls</h1>
+    <p>Security patterns that protect data while enabling teams to ship automation faster.</p>
+  </div>
+  <div class="section" style="max-width:800px;margin:auto;">
+    <p>Define model access by role, isolate sensitive datasets, and enforce action-level permissions for automations. Add trace logs and approval gates for high-impact operations to reduce risk in production workflows.</p>
+    <p>Security maturity improves when prompts, connectors, and action scopes are reviewed as deployable artifacts. This creates clear accountability and reduces accidental privilege expansion.</p>
+    <button class="nav-cta" onclick="showPage('blog')">← Back to Blog</button>
+  </div>
+</div>
+
+<div class="page" id="page-blog-b7">
+  <div class="page-header">
+    <span class="section-label">Case Study</span>
+    <h1>From manual ops to autonomous pipelines in 8 weeks</h1>
+    <p>How one SaaS team reduced repetitive workload by 62% with staged automation.</p>
+  </div>
+  <div class="section" style="max-width:800px;margin:auto;">
+    <p>The team started with repetitive onboarding tasks, then expanded into support triage and reporting automation. Weekly QA loops maintained quality while throughput improved each sprint.</p>
+    <p>The key was phased adoption: one stable use case per cycle, with clear success metrics and rollback rules. This allowed fast scaling without destabilizing core operations.</p>
+    <button class="nav-cta" onclick="showPage('blog')">← Back to Blog</button>
+  </div>
+</div>
+
+<div class="page" id="page-solution-0">
+  <div class="page-header">
+    <span class="section-label">Solution Details</span>
+    <h1>AI Chat-Bot</h1>
+    <p>Intelligent conversational agents for support, qualification, and automation.</p>
+  </div>
+  <div class="section" style="max-width:800px;margin:auto;">
+    <p>Our AI chatbot platform leverages state-of-the-art NLP to provide human-like responses and manage complex customer queries 24/7 without human intervention. It reduces support overhead while improving response consistency across channels.</p>
+    <p>Deployments include knowledge integration, fallback handling, and human handoff logic so teams can maintain quality while scaling conversations in real time.</p>
+    <button class="nav-cta" onclick="showPage('solutions')">← Back to Solutions</button>
+    <button class="btn-primary" style="margin-left:12px" onclick="showPage('contact')">Discuss This Solution →</button>
+  </div>
+</div>
+
+<div class="page" id="page-solution-1">
+  <div class="page-header">
+    <span class="section-label">Solution Details</span>
+    <h1>HR Flows</h1>
+    <p>Automate hiring, onboarding, and employee support with contextual AI.</p>
+  </div>
+  <div class="section" style="max-width:800px;margin:auto;">
+    <p>Automate HR processes from candidate screening and onboarding to policy Q&A with AI that understands tone and intent. This streamlines repetitive operations while preserving a consistent employee experience.</p>
+    <p>Workflows integrate with internal tools for ticketing, documentation, and approvals so HR teams can focus on high-impact decision making.</p>
+    <button class="nav-cta" onclick="showPage('solutions')">← Back to Solutions</button>
+    <button class="btn-primary" style="margin-left:12px" onclick="showPage('contact')">Discuss This Solution →</button>
+  </div>
+</div>
+
+<div class="page" id="page-solution-2">
+  <div class="page-header">
+    <span class="section-label">Solution Details</span>
+    <h1>Lead Generation</h1>
+    <p>Identify, score, and nurture high-quality pipeline using behavioral signals.</p>
+  </div>
+  <div class="section" style="max-width:800px;margin:auto;">
+    <p>Our AI lead generation engine analyzes behavioral signals, firmographic data, and intent markers to deliver conversion-ready leads. It helps teams prioritize outreach where probability of revenue impact is highest.</p>
+    <p>The solution integrates with CRM and enrichment pipelines, continuously adapting scoring models to match your ideal customer profile over time.</p>
+    <button class="nav-cta" onclick="showPage('solutions')">← Back to Solutions</button>
+    <button class="btn-primary" style="margin-left:12px" onclick="showPage('contact')">Discuss This Solution →</button>
+  </div>
+</div>
+
+<div class="page" id="page-solution-3">
+  <div class="page-header">
+    <span class="section-label">Solution Details</span>
+    <h1>Cold Email Automation</h1>
+    <p>Hyper-personalized outbound at scale with adaptive follow-up logic.</p>
+  </div>
+  <div class="section" style="max-width:800px;margin:auto;">
+    <p>Craft hyper-personalized cold emails at scale using AI that researches prospects, writes targeted copy, optimizes send timing, and tracks replies. The system continuously tunes performance across segments and stages.</p>
+    <p>By combining prompt templates with response-intent classification, teams can move prospects to sales at the right time and improve meeting conversion rates.</p>
+    <button class="nav-cta" onclick="showPage('solutions')">← Back to Solutions</button>
+    <button class="btn-primary" style="margin-left:12px" onclick="showPage('contact')">Discuss This Solution →</button>
+  </div>
+</div>
+
+<div class="page" id="page-solution-4">
+  <div class="page-header">
+    <span class="section-label">Solution Details</span>
+    <h1>SaaS platform</h1>
+    <p>AI voice agents for qualification, scheduling, and inbound handling at scale.</p>
+  </div>
+  <div class="section" style="max-width:800px;margin:auto;">
+    <p>Deploy AI voice agents that sound and respond like trained sales reps. They can handle high call volumes, qualify prospects using your scripts, and auto-schedule meetings into calendars with near-zero wait time.</p>
+    <p>Conversation analytics and transcript syncing provide actionable insight so teams can improve scripts, routing, and close rates over time.</p>
+    <button class="nav-cta" onclick="showPage('solutions')">← Back to Solutions</button>
+    <button class="btn-primary" style="margin-left:12px" onclick="showPage('contact')">Discuss This Solution →</button>
+  </div>
+</div>
+
+
 
 <!-- ======================== CONTACT + GET STARTED (MERGED) ======================== -->
 <div class="page" id="page-contact">
@@ -621,7 +882,7 @@ img, svg {
     <div class="form-card reveal">
       <div class="contact-tabs">
         <button class="ctab active" id="tab-contact" onclick="switchTab('contact-tab','tab-contact')">📬 Contact Us</button>
-        <button class="ctab" id="tab-gs" onclick="switchTab('getstarted-tab','tab-gs')">🚀 Get Started</button>
+        <!-- <button class="ctab" id="tab-gs" onclick="switchTab('getstarted-tab','tab-gs')">🚀 Get Started</button> -->
       </div>
 
       <div class="tab-panel active" id="contact-tab">
@@ -699,33 +960,16 @@ function animateCounters() {
 }
 setTimeout(animateCounters, 500);
 
-// SOLUTIONS TOGGLE
-function toggleSol(idx) {
-  const el = document.getElementById('sol-' + idx);
-  const isOpen = el.style.display !== 'none';
-  el.style.display = isOpen ? 'none' : 'block';
-  const btn = document.querySelector(`[data-sol="${idx}"] .learn-more-btn`);
-  btn.innerHTML = isOpen
-    ? `Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`
-    : `Collapse <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M19 12l-7-7-7 7"/></svg>`;
+// DETAIL PAGE NAV
+function openBlog(id) {
+  showPage('blog-' + id);
 }
 
-// BLOG TOGGLE
-function toggleBlog(id) {
-  const content = document.getElementById('blog-expand-' + id);
-  const item = document.querySelector(`[data-blog="${id}"]`);
-  const label = document.getElementById('blog-read-' + id);
-  const isOpen = content.style.display === 'block';
-
-  document.querySelectorAll('.blog-expand').forEach(el => el.style.display = 'none');
-  document.querySelectorAll('[data-blog]').forEach(el => el.classList.remove('open'));
-  document.querySelectorAll('[id^="blog-read-"]').forEach(el => el.textContent = el.dataset.default || 'Read article →');
-
-  if (!isOpen) {
-    content.style.display = 'block';
-    item.classList.add('open');
-    label.textContent = 'Collapse article ↑';
+function openSolution(id, event) {
+  if (event) {
+    event.stopPropagation();
   }
+  showPage('solution-' + id);
 }
 
 // TAB SWITCH
@@ -767,6 +1011,29 @@ document.querySelectorAll('.btn-primary, .nav-cta, .form-submit').forEach(btn =>
     }
   });
 });
+
+
+
+
+
+
+
 </script>
+<script>
+function openDrawer() {
+  document.getElementById("mobileDrawer").classList.add("active");
+}
+
+function closeDrawer() {
+  document.getElementById("mobileDrawer").classList.remove("active");
+}
+
+function handleNav(page) {
+  showPage(page);
+  closeDrawer();
+}
+</script>
+
+
 </body>
 </html>
