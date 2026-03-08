@@ -112,7 +112,7 @@
   
 
   /* SECTIONS */
-  .section { padding:100px 60px; }
+  .section { padding:100px 60px;  }
   .section-label { font-size:12px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--orange); margin-bottom:16px; display:block; }
   .section-title { font-family:'Syne',sans-serif; font-size:clamp(28px,4vw,50px); font-weight:800; line-height:1.1; letter-spacing:-0.02em; margin-bottom:16px; }
   .section-sub { color:var(--text-dim); font-size:17px; line-height:1.7; margin-bottom:60px; max-width:560px; }
@@ -267,7 +267,7 @@ background:linear-gradient(
   .ci-card:hover { border-color:rgba(255,87,34,0.3); }
   .ci-card .ci-icon { font-size:24px; margin-bottom:10px; }
   .ci-card h4 { font-size:13px; color:var(--orange); font-weight:600; margin-bottom:5px; }
-  .ci-card p { font-size:13px; color:var(--text-muted); }
+  .ci-card p { font-size:16px; color:#fff; }
   .connect-points { display:flex; flex-direction:column; gap:18px; }
   .connect-point { display:flex; align-items:flex-start; gap:14px; }
   .connect-point-icon { width:40px; height:40px; min-width:40px; background:rgba(255,87,34,0.1); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; }
@@ -359,7 +359,7 @@ background:linear-gradient(
   right: -280px;
   width: 260px;
   height: 100vh;
-  background: var(--dark2);
+  background: #fff;
   border-left: 1px solid var(--border);
   padding: 20px;
   transition: right 0.3s ease;
@@ -699,8 +699,21 @@ Stop looking in the rearview mirror. Transform scattered datasets into actionabl
     <h1>How to Deploy AI Agents in 30 Days Without Breaking Existing Workflows</h1>
     <p>A practical rollout framework covering scope, integrations, governance, and team onboarding.</p>
   </div>
-  <div class="section" style="max-width:800px;margin:auto;">
-    <p>This guide breaks deployment into four phases: process audit, agent pilot, workflow integration, and optimization loops. Start by selecting one workflow with clear inputs and measurable outcomes so early wins are visible and low risk.</p>
+<div class="section" 
+style="
+max-width:800px;
+margin:auto;
+background-color:#0a0a0a;
+color:white;
+padding:35px;
+border-radius:14px;
+border:1px solid #1f1f1f;
+box-shadow:0 10px 35px rgba(0,0,0,0.6);
+line-height:1.7;
+font-size:16px;
+margin-top:30px;
+transition:all 0.3s ease;
+">    <p>This guide breaks deployment into four phases: process audit, agent pilot, workflow integration, and optimization loops. Start by selecting one workflow with clear inputs and measurable outcomes so early wins are visible and low risk.</p>
     <p>During rollout, pair technical implementation with operator playbooks. Define escalation paths, QA checks, and ownership boundaries before moving from pilot to production. This prevents disruption while preserving decision speed and output quality.</p>
     <button class="nav-cta" onclick="showPage('blog')">← Back to Blog</button>
   </div>
@@ -712,8 +725,21 @@ Stop looking in the rearview mirror. Transform scattered datasets into actionabl
     <h1>7 AI outreach sequences that booked 2x more demos</h1>
     <p>What high-performing GTM teams changed in prompts, timing, and follow-up logic.</p>
   </div>
-  <div class="section" style="max-width:800px;margin:auto;">
-    <p>The top-performing sequences layered account research, pain-specific hooks, and adaptive follow-ups based on reply intent. Personalized openers and value framing consistently outperformed generic templates in both reply and meeting conversion rates.</p>
+<div class="section" 
+style="
+max-width:800px;
+margin:auto;
+background-color:#0a0a0a;
+color:white;
+padding:35px;
+border-radius:14px;
+border:1px solid #1f1f1f;
+box-shadow:0 10px 35px rgba(0,0,0,0.6);
+line-height:1.7;
+font-size:16px;
+margin-top:30px;
+transition:all 0.3s ease;
+">    <p>The top-performing sequences layered account research, pain-specific hooks, and adaptive follow-ups based on reply intent. Personalized openers and value framing consistently outperformed generic templates in both reply and meeting conversion rates.</p>
     <p>The article includes tested timing windows, structure templates, and a scoring model to decide when to escalate to sales. Teams that aligned AI outreach scoring with CRM stages saw faster handoffs and fewer unqualified meetings.</p>
     <button class="nav-cta" onclick="showPage('blog')">← Back to Blog</button>
   </div>
@@ -725,8 +751,21 @@ Stop looking in the rearview mirror. Transform scattered datasets into actionabl
     <h1>Choosing the right LLM stack for customer support</h1>
     <p>Model routing, fallback logic, and guardrails for stable high-volume support bots.</p>
   </div>
-  <div class="section" style="max-width:800px;margin:auto;">
-    <p>Compare costs per resolved ticket across model tiers, route by ticket complexity, and use confidence thresholds to hand off sensitive or ambiguous cases to humans automatically. This tiered approach improves reliability without overspending on every interaction.</p>
+<div class="section" 
+style="
+max-width:800px;
+margin:auto;
+background-color:#0a0a0a;
+color:white;
+padding:35px;
+border-radius:14px;
+border:1px solid #1f1f1f;
+box-shadow:0 10px 35px rgba(0,0,0,0.6);
+line-height:1.7;
+font-size:16px;
+margin-top:30px;
+transition:all 0.3s ease;
+">    <p>Compare costs per resolved ticket across model tiers, route by ticket complexity, and use confidence thresholds to hand off sensitive or ambiguous cases to humans automatically. This tiered approach improves reliability without overspending on every interaction.</p>
     <p>Operationally, treat prompt versions, retrieval configs, and routing rules as release-managed assets. Observability on deflection quality, reopen rate, and escalation speed helps keep support quality high as volume grows.</p>
     <button class="nav-cta" onclick="showPage('blog')">← Back to Blog</button>
   </div>
@@ -738,8 +777,21 @@ Stop looking in the rearview mirror. Transform scattered datasets into actionabl
     <h1>What to automate first: a 5-step AI prioritization matrix</h1>
     <p>Score internal workflows by impact, complexity, and data readiness before building.</p>
   </div>
-  <div class="section" style="max-width:800px;margin:auto;">
-    <p>The matrix weighs hours saved, risk level, integration effort, and data quality. Use it to select high-impact, low-risk workflows first, then sequence advanced automations in later sprints to minimize change fatigue.</p>
+<div class="section" 
+style="
+max-width:800px;
+margin:auto;
+background-color:#0a0a0a;
+color:white;
+padding:35px;
+border-radius:14px;
+border:1px solid #1f1f1f;
+box-shadow:0 10px 35px rgba(0,0,0,0.6);
+line-height:1.7;
+font-size:16px;
+margin-top:30px;
+transition:all 0.3s ease;
+">    <p>The matrix weighs hours saved, risk level, integration effort, and data quality. Use it to select high-impact, low-risk workflows first, then sequence advanced automations in later sprints to minimize change fatigue.</p>
     <p>Teams get best results when each candidate workflow includes an owner, baseline KPI, and success threshold before development starts. This turns prioritization from opinion into an execution roadmap.</p>
     <button class="nav-cta" onclick="showPage('blog')">← Back to Blog</button>
   </div>
@@ -751,8 +803,21 @@ Stop looking in the rearview mirror. Transform scattered datasets into actionabl
     <h1>RAG vs fine-tuning: where each approach actually wins</h1>
     <p>A quick decision guide for teams balancing speed, accuracy, and maintenance overhead.</p>
   </div>
-  <div class="section" style="max-width:800px;margin:auto;">
-    <p>Use RAG when knowledge changes often and observability matters. Fine-tune for fixed behavior, stable format output, or domain-specific style where consistency is more important than rapid content updates.</p>
+<div class="section" 
+style="
+max-width:800px;
+margin:auto;
+background-color:#0a0a0a;
+color:white;
+padding:35px;
+border-radius:14px;
+border:1px solid #1f1f1f;
+box-shadow:0 10px 35px rgba(0,0,0,0.6);
+line-height:1.7;
+font-size:16px;
+margin-top:30px;
+transition:all 0.3s ease;
+">    <p>Use RAG when knowledge changes often and observability matters. Fine-tune for fixed behavior, stable format output, or domain-specific style where consistency is more important than rapid content updates.</p>
     <p>Hybrid patterns can deliver both freshness and consistency by combining retrieval for dynamic facts with smaller tuned models for deterministic outputs. The right choice depends on data volatility and response guarantees.</p>
     <button class="nav-cta" onclick="showPage('blog')">← Back to Blog</button>
   </div>
@@ -764,8 +829,21 @@ Stop looking in the rearview mirror. Transform scattered datasets into actionabl
     <h1>Automating inbound qualification with AI voice agents</h1>
     <p>How to route, score, and book qualified leads in real-time from inbound calls.</p>
   </div>
-  <div class="section" style="max-width:800px;margin:auto;">
-    <p>Build a qualification tree around intent, budget, and urgency. Route qualified callers directly to calendars, send transcript summaries to CRM, and auto-trigger follow-ups for no-show recovery.</p>
+<div class="section" 
+style="
+max-width:800px;
+margin:auto;
+background-color:#0a0a0a;
+color:white;
+padding:35px;
+border-radius:14px;
+border:1px solid #1f1f1f;
+box-shadow:0 10px 35px rgba(0,0,0,0.6);
+line-height:1.7;
+font-size:16px;
+margin-top:30px;
+transition:all 0.3s ease;
+">    <p>Build a qualification tree around intent, budget, and urgency. Route qualified callers directly to calendars, send transcript summaries to CRM, and auto-trigger follow-ups for no-show recovery.</p>
     <p>To improve outcomes, enforce consistent disposition tagging and monitor drop-off moments in conversation paths. These signals help teams refine scripts and increase downstream close rates.</p>
     <button class="nav-cta" onclick="showPage('blog')">← Back to Blog</button>
   </div>
@@ -777,8 +855,21 @@ Stop looking in the rearview mirror. Transform scattered datasets into actionabl
     <h1>Building safe AI workflows with role-based controls</h1>
     <p>Security patterns that protect data while enabling teams to ship automation faster.</p>
   </div>
-  <div class="section" style="max-width:800px;margin:auto;">
-    <p>Define model access by role, isolate sensitive datasets, and enforce action-level permissions for automations. Add trace logs and approval gates for high-impact operations to reduce risk in production workflows.</p>
+<div class="section" 
+style="
+max-width:800px;
+margin:auto;
+background-color:#0a0a0a;
+color:white;
+padding:35px;
+border-radius:14px;
+border:1px solid #1f1f1f;
+box-shadow:0 10px 35px rgba(0,0,0,0.6);
+line-height:1.7;
+font-size:16px;
+margin-top:30px;
+transition:all 0.3s ease;
+">    <p>Define model access by role, isolate sensitive datasets, and enforce action-level permissions for automations. Add trace logs and approval gates for high-impact operations to reduce risk in production workflows.</p>
     <p>Security maturity improves when prompts, connectors, and action scopes are reviewed as deployable artifacts. This creates clear accountability and reduces accidental privilege expansion.</p>
     <button class="nav-cta" onclick="showPage('blog')">← Back to Blog</button>
   </div>
@@ -790,8 +881,21 @@ Stop looking in the rearview mirror. Transform scattered datasets into actionabl
     <h1>From manual ops to autonomous pipelines in 8 weeks</h1>
     <p>How one SaaS team reduced repetitive workload by 62% with staged automation.</p>
   </div>
-  <div class="section" style="max-width:800px;margin:auto;">
-    <p>The team started with repetitive onboarding tasks, then expanded into support triage and reporting automation. Weekly QA loops maintained quality while throughput improved each sprint.</p>
+<div class="section" 
+style="
+max-width:800px;
+margin:auto;
+background-color:#0a0a0a;
+color:white;
+padding:35px;
+border-radius:14px;
+border:1px solid #1f1f1f;
+box-shadow:0 10px 35px rgba(0,0,0,0.6);
+line-height:1.7;
+font-size:16px;
+margin-top:30px;
+transition:all 0.3s ease;
+">    <p>The team started with repetitive onboarding tasks, then expanded into support triage and reporting automation. Weekly QA loops maintained quality while throughput improved each sprint.</p>
     <p>The key was phased adoption: one stable use case per cycle, with clear success metrics and rollback rules. This allowed fast scaling without destabilizing core operations.</p>
     <button class="nav-cta" onclick="showPage('blog')">← Back to Blog</button>
   </div>
@@ -803,12 +907,35 @@ Stop looking in the rearview mirror. Transform scattered datasets into actionabl
     <h1>AI Chat-Bot</h1>
     <p>Intelligent conversational agents for support, qualification, and automation.</p>
   </div>
-  <div class="section" style="max-width:800px;margin:auto;">
-    <p>Our AI chatbot platform leverages state-of-the-art NLP to provide human-like responses and manage complex customer queries 24/7 without human intervention. It reduces support overhead while improving response consistency across channels.</p>
+<div class="section" 
+style="
+max-width:800px;
+margin:auto;
+background-color:#0a0a0a;
+color:white;
+padding:35px;
+border-radius:14px;
+border:1px solid #1f1f1f;
+box-shadow:0 10px 35px rgba(0,0,0,0.6);
+line-height:1.7;
+font-size:16px;
+margin-top:30px;
+transition:all 0.3s ease;
+">    <p>Our AI chatbot platform leverages state-of-the-art NLP to provide human-like responses and manage complex customer queries 24/7 without human intervention. It reduces support overhead while improving response consistency across channels.</p>
+
     <p>Deployments include knowledge integration, fallback handling, and human handoff logic so teams can maintain quality while scaling conversations in real time.</p>
-    <button class="nav-cta" onclick="showPage('solutions')">← Back to Solutions</button>
-    <button class="btn-primary" style="margin-left:12px" onclick="showPage('contact')">Discuss This Solution →</button>
+     <div style="margin-top:25px;">
+        <button class="nav-cta" onclick="showPage('solutions')">
+            ← Back to Solutions
+        </button>
+
+        <button class="btn-primary" style="margin-left:12px;" onclick="showPage('contact')">
+            Discuss This Solution →
+        </button>
+    </div>
   </div>
+</div>
+
 </div>
 
 <div class="page" id="page-solution-1">
@@ -817,8 +944,21 @@ Stop looking in the rearview mirror. Transform scattered datasets into actionabl
     <h1>HR Flows</h1>
     <p>Automate hiring, onboarding, and employee support with contextual AI.</p>
   </div>
-  <div class="section" style="max-width:800px;margin:auto;">
-    <p>Automate HR processes from candidate screening and onboarding to policy Q&A with AI that understands tone and intent. This streamlines repetitive operations while preserving a consistent employee experience.</p>
+<div class="section" 
+style="
+max-width:800px;
+margin:auto;
+background-color:#0a0a0a;
+color:white;
+padding:35px;
+border-radius:14px;
+border:1px solid #1f1f1f;
+box-shadow:0 10px 35px rgba(0,0,0,0.6);
+line-height:1.7;
+font-size:16px;
+margin-top:30px;
+transition:all 0.3s ease;
+">    <p>Automate HR processes from candidate screening and onboarding to policy Q&A with AI that understands tone and intent. This streamlines repetitive operations while preserving a consistent employee experience.</p>
     <p>Workflows integrate with internal tools for ticketing, documentation, and approvals so HR teams can focus on high-impact decision making.</p>
     <button class="nav-cta" onclick="showPage('solutions')">← Back to Solutions</button>
     <button class="btn-primary" style="margin-left:12px" onclick="showPage('contact')">Discuss This Solution →</button>
@@ -831,8 +971,21 @@ Stop looking in the rearview mirror. Transform scattered datasets into actionabl
     <h1>Lead Generation</h1>
     <p>Identify, score, and nurture high-quality pipeline using behavioral signals.</p>
   </div>
-  <div class="section" style="max-width:800px;margin:auto;">
-    <p>Our AI lead generation engine analyzes behavioral signals, firmographic data, and intent markers to deliver conversion-ready leads. It helps teams prioritize outreach where probability of revenue impact is highest.</p>
+<div class="section" 
+style="
+max-width:800px;
+margin:auto;
+background-color:#0a0a0a;
+color:white;
+padding:35px;
+border-radius:14px;
+border:1px solid #1f1f1f;
+box-shadow:0 10px 35px rgba(0,0,0,0.6);
+line-height:1.7;
+font-size:16px;
+margin-top:30px;
+transition:all 0.3s ease;
+">    <p>Our AI lead generation engine analyzes behavioral signals, firmographic data, and intent markers to deliver conversion-ready leads. It helps teams prioritize outreach where probability of revenue impact is highest.</p>
     <p>The solution integrates with CRM and enrichment pipelines, continuously adapting scoring models to match your ideal customer profile over time.</p>
     <button class="nav-cta" onclick="showPage('solutions')">← Back to Solutions</button>
     <button class="btn-primary" style="margin-left:12px" onclick="showPage('contact')">Discuss This Solution →</button>
@@ -845,8 +998,21 @@ Stop looking in the rearview mirror. Transform scattered datasets into actionabl
     <h1>Cold Email Automation</h1>
     <p>Hyper-personalized outbound at scale with adaptive follow-up logic.</p>
   </div>
-  <div class="section" style="max-width:800px;margin:auto;">
-    <p>Craft hyper-personalized cold emails at scale using AI that researches prospects, writes targeted copy, optimizes send timing, and tracks replies. The system continuously tunes performance across segments and stages.</p>
+<div class="section" 
+style="
+max-width:800px;
+margin:auto;
+background-color:#0a0a0a;
+color:white;
+padding:35px;
+border-radius:14px;
+border:1px solid #1f1f1f;
+box-shadow:0 10px 35px rgba(0,0,0,0.6);
+line-height:1.7;
+font-size:16px;
+margin-top:30px;
+transition:all 0.3s ease;
+">    <p>Craft hyper-personalized cold emails at scale using AI that researches prospects, writes targeted copy, optimizes send timing, and tracks replies. The system continuously tunes performance across segments and stages.</p>
     <p>By combining prompt templates with response-intent classification, teams can move prospects to sales at the right time and improve meeting conversion rates.</p>
     <button class="nav-cta" onclick="showPage('solutions')">← Back to Solutions</button>
     <button class="btn-primary" style="margin-left:12px" onclick="showPage('contact')">Discuss This Solution →</button>
@@ -859,9 +1025,21 @@ Stop looking in the rearview mirror. Transform scattered datasets into actionabl
     <h1>SaaS platform</h1>
     <p>AI voice agents for qualification, scheduling, and inbound handling at scale.</p>
   </div>
-  <div class="section" style="max-width:800px;margin:auto;">
-    <p>Deploy AI voice agents that sound and respond like trained sales reps. They can handle high call volumes, qualify prospects using your scripts, and auto-schedule meetings into calendars with near-zero wait time.</p>
-    <p>Conversation analytics and transcript syncing provide actionable insight so teams can improve scripts, routing, and close rates over time.</p>
+<div class="section" 
+style="
+max-width:800px;
+margin:auto;
+background-color:#0a0a0a;
+color:white;
+padding:35px;
+border-radius:14px;
+border:1px solid #1f1f1f;
+box-shadow:0 10px 35px rgba(0,0,0,0.6);
+line-height:1.7;
+font-size:16px;
+margin-top:30px;
+transition:all 0.3s ease;
+">    <p>Conversation analytics and transcript syncing provide actionable insight so teams can improve scripts, routing, and close rates over time.</p>
     <button class="nav-cta" onclick="showPage('solutions')">← Back to Solutions</button>
     <button class="btn-primary" style="margin-left:12px" onclick="showPage('contact')">Discuss This Solution →</button>
   </div>
@@ -876,9 +1054,21 @@ Stop looking in the rearview mirror. Transform scattered datasets into actionabl
     <p>Intelligent chat agents for websites, apps, and customer portals.</p>
   </div>
 
-  <div class="section" style="max-width:800px;margin:auto;">
-    <p>Deploy AI-powered chat assistants that instantly respond to customer queries, qualify leads, and guide users through your services. These agents integrate seamlessly with your CRM and internal tools.</p>
-
+<div class="section" 
+style="
+max-width:800px;
+margin:auto;
+background-color:#0a0a0a;
+color:white;
+padding:35px;
+border-radius:14px;
+border:1px solid #1f1f1f;
+box-shadow:0 10px 35px rgba(0,0,0,0.6);
+line-height:1.7;
+font-size:16px;
+margin-top:30px;
+transition:all 0.3s ease;
+">
     <p>With smart intent recognition and real-time response adaptation, your support and sales teams can reduce workload while increasing engagement and conversion rates.</p>
 
     <button class="nav-cta" onclick="showPage('solutions')">← Back to Solutions</button>
@@ -893,9 +1083,21 @@ Stop looking in the rearview mirror. Transform scattered datasets into actionabl
     <p>Automate repetitive tasks and internal operations with AI.</p>
   </div>
 
-  <div class="section" style="max-width:800px;margin:auto;">
-    <p>Transform manual workflows into intelligent automated systems. From lead routing and follow-ups to internal approvals and reporting, AI handles operations faster and with fewer errors.</p>
-
+<div class="section" 
+style="
+max-width:800px;
+margin:auto;
+background-color:#0a0a0a;
+color:white;
+padding:35px;
+border-radius:14px;
+border:1px solid #1f1f1f;
+box-shadow:0 10px 35px rgba(0,0,0,0.6);
+line-height:1.7;
+font-size:16px;
+margin-top:30px;
+transition:all 0.3s ease;
+">
     <p>Custom integrations ensure your automation engine connects across tools like CRM, email platforms, and databases — giving your team more time to focus on strategic work.</p>
 
     <button class="nav-cta" onclick="showPage('solutions')">← Back to Solutions</button>
@@ -911,8 +1113,21 @@ Stop looking in the rearview mirror. Transform scattered datasets into actionabl
     <p>Data-driven intelligence to optimize growth and decision-making.</p>
   </div>
 
-  <div class="section" style="max-width:800px;margin:auto;">
-    <p>Leverage AI to analyze conversations, customer behavior, and operational data. Identify patterns, predict outcomes, and uncover actionable insights that directly improve revenue and performance.</p>
+<div class="section" 
+style="
+max-width:800px;
+margin:auto;
+background-color:#0a0a0a;
+color:white;
+padding:35px;
+border-radius:14px;
+border:1px solid #1f1f1f;
+box-shadow:0 10px 35px rgba(0,0,0,0.6);
+line-height:1.7;
+font-size:16px;
+margin-top:30px;
+transition:all 0.3s ease;
+">    <p>Leverage AI to analyze conversations, customer behavior, and operational data. Identify patterns, predict outcomes, and uncover actionable insights that directly improve revenue and performance.</p>
 
     <p>Interactive dashboards and automated reporting provide real-time visibility into KPIs, enabling smarter strategy and faster execution.</p>
 
@@ -930,10 +1145,10 @@ Stop looking in the rearview mirror. Transform scattered datasets into actionabl
       <h2>We'd love to<br>hear from you.</h2>
       <p>Whether you're looking to explore our AI solutions, schedule a demo, or simply have a question — our team responds within 24 hours.</p>
       <div class="contact-info-grid">
-        <div class="ci-card"><div class="ci-icon">📧</div><h4>Email</h4><p>hello@nexamind.ai</p></div>
-        <div class="ci-card"><div class="ci-icon">📞</div><h4>Phone</h4><p>+91 98765 43210</p></div>
+        <div class="ci-card"><div class="ci-icon">📧</div><h4>Email</h3><p>hello@nexamind.ai</p></div>
+        <div class="ci-card"><div class="ci-icon">📞</div><h4>Phone</h3><p>+91 98765 43210</p></div>
         <div class="ci-card"><div class="ci-icon">📍</div><h4>Location</h4><p>Bangalore, India</p></div>
-        <div class="ci-card"><div class="ci-icon">🕐</div><h4>Response Time</h4><p>Within 24 hours</p></div>
+        <div class="ci-card"><div class="ci-icon">🕐</div><h4>Response Time</h4><p>Immidiate</p></div>
       </div>
       <div class="connect-points">
         <div class="connect-point"><div class="connect-point-icon">⚡</div><div class="connect-point-text"><h4>Fast Response</h4><p>We respond to all inquiries within 24 business hours.</p></div></div>
@@ -944,7 +1159,7 @@ Stop looking in the rearview mirror. Transform scattered datasets into actionabl
 
     <div class="form-card reveal">
       <div class="contact-tabs">
-        <button class="ctab active" id="tab-contact" onclick="switchTab('contact-tab','tab-contact')">📬 Contact Us</button>
+        <!-- <button class="ctab active" id="tab-contact" onclick="switchTab('contact-tab','tab-contact')">📬 Contact Us</button> -->
         <!-- <button class="ctab" id="tab-gs" onclick="switchTab('getstarted-tab','tab-gs')">🚀 Get Started</button> -->
       </div>
 
